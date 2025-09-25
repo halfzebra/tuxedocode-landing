@@ -122,3 +122,40 @@ export async function getPostAndMorePosts(
     morePosts: extractPostEntries(entries),
   };
 }
+
+const CUSTOMER_GRAPHQL_FIELDS = `
+  name
+  website
+  logo {
+    title
+    description
+    contentType
+    fileName
+    size
+    url
+    width
+    height
+  }
+`;
+
+function extractCustomerEntries(fetchResponse: any): any[] {
+  return fetchResponse?.data?.customerCollection?.items;
+}
+
+export async function getAllCustomers(
+  isDraftMode: boolean = false
+): Promise<any[]> {
+  const entries = await fetchGraphQL(
+    `query {
+      customerCollection(order: name_ASC, preview: ${
+        isDraftMode ? "true" : "false"
+      }) {
+        items {
+          ${CUSTOMER_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    isDraftMode
+  );
+  return extractCustomerEntries(entries);
+}
