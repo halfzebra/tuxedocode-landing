@@ -1,6 +1,6 @@
-# TuxedoCode Blog
+# Tuxedo Code
 
-A personal blog built with Next.js and Contentful CMS, featuring modern web development practices and clean design.
+Professional software development company website built with Next.js and Contentful CMS.
 
 ## Tech Stack
 
@@ -23,17 +23,13 @@ pnpm dev
 pnpm build
 ```
 
-The blog will be available at [http://localhost:3000](http://localhost:3000).
+The website will be available at [http://localhost:3000](http://localhost:3000).
 
 ## Features
 
-- 📝 Blog posts with rich text content
-- 🖼️ Cover images and author profiles
-- 🔄 Draft mode for content preview
+- 📝 Company blog and insights
+- 🖼️ Professional content presentation
+- 🔄 Content management via Contentful
 - 📱 Responsive design
-- ⚡ Static generation for optimal performance
-- 🔄 On-demand revalidation via webhooks
-
-## Original Template
-
-This blog is based on the [Next.js Contentful CMS example](https://github.com/vercel/next.js/tree/canary/examples/cms-contentful). For detailed setup instructions and advanced configuration, refer to the original template documentation.
+- ⚡ Optimized performance
+- 🔄 Real-time content updates

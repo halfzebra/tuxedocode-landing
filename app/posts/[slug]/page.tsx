@@ -30,9 +30,10 @@ export default async function PostPage({
     <div className="container mx-auto px-5">
       <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
         <Link href="/" className="hover:underline">
-          Blog
+          Tuxedo Code
         </Link>
-        .
+        {" > "}
+        <span className="text-gray-600">Insights</span>
       </h2>
       <article>
         <h1 className="mb-12 text-center text-6xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">

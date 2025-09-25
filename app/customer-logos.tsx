@@ -20,6 +20,7 @@ export default function CustomerLogos({
 }: {
   customers: Customer[];
 }) {
+  // Don't show the section if there are no customers
   if (!customers || customers.length === 0) {
     return null;
   }
@@ -28,7 +29,7 @@ export default function CustomerLogos({
     <section className="py-16">
       <div className="container mx-auto px-5">
         <h2 className="mb-8 text-4xl md:text-5xl font-bold tracking-tighter leading-tight text-center">
-          Trusted by Leading Companies
+          Trusted Partners
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
           {customers.map((customer, index) => (
@@ -43,7 +44,11 @@ export default function CustomerLogos({
                 >
                   <ContentfulImage
                     src={customer.logo.url}
-                    alt={customer.logo.description || customer.logo.title || customer.name}
+                    alt={
+                      customer.logo.description ||
+                      customer.logo.title ||
+                      customer.name
+                    }
                     width={Math.min(customer.logo.width, 120)}
                     height={Math.min(customer.logo.height, 60)}
                     className="max-w-full h-auto object-contain"
@@ -52,7 +57,11 @@ export default function CustomerLogos({
               ) : (
                 <ContentfulImage
                   src={customer.logo.url}
-                  alt={customer.logo.description || customer.logo.title || customer.name}
+                  alt={
+                    customer.logo.description ||
+                    customer.logo.title ||
+                    customer.name
+                  }
                   width={Math.min(customer.logo.width, 120)}
                   height={Math.min(customer.logo.height, 60)}
                   className="max-w-full h-auto object-contain"

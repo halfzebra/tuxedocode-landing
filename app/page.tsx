@@ -8,7 +8,6 @@ import MoreStories from "./more-stories";
 import CustomerLogos from "./customer-logos";
 
 import { getAllPosts, getAllCustomers } from "@/lib/api";
-import { CMS_NAME, CMS_URL } from "@/lib/constants";
 
 function Intro() {
   return (
@@ -17,21 +16,8 @@ function Intro() {
         Tuxedo Code
       </h1>
       <h2 className="text-center md:text-left text-lg mt-5 md:pl-8">
-        A statically generated blog example using{" "}
-        <a
-          href="https://nextjs.org/"
-          className="underline hover:text-success duration-200 transition-colors"
-        >
-          Next.js
-        </a>{" "}
-        and{" "}
-        <a
-          href={CMS_URL}
-          className="underline hover:text-success duration-200 transition-colors"
-        >
-          {CMS_NAME}
-        </a>
-        .
+        Premium software development and consulting services for modern
+        businesses.
       </h2>
     </section>
   );
