@@ -29,26 +29,57 @@ const POST_GRAPHQL_FIELDS = `
 `;
 
 async function fetchGraphQL(query: string, preview = false): Promise<any> {
-  return fetch(
-    `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${
-          preview
-            ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN
-            : process.env.CONTENTFUL_ACCESS_TOKEN
-        }`,
-      },
-      body: JSON.stringify({ query }),
-      // Enable ISR with cache tags and revalidation
-      next: {
-        tags: ["posts"],
-        revalidate: preview ? 0 : 3600, // Don't cache preview, cache production for 1 hour
-      },
-    }
-  ).then((response) => response.json());
+  const spaceId = process.env.CONTENTFUL_SPACE_ID;
+  const envId = process.env.CONTENTFUL_ENVIRONMENT || "master";
+  const token = preview
+    ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN
+    : process.env.CONTENTFUL_ACCESS_TOKEN;
+
+  if (!spaceId) {
+    throw new Error("Missing CONTENTFUL_SPACE_ID. Check your .env(.local) file.");
+  }
+  if (!token) {
+    throw new Error(
+      preview
+        ? "Missing CONTENTFUL_PREVIEW_ACCESS_TOKEN."
+        : "Missing CONTENTFUL_ACCESS_TOKEN."
+    );
+  }
+
+  const endpoint = `https://graphql.contentful.com/content/v1/spaces/${spaceId}?environment=${encodeURIComponent(
+    envId
+  )}`;
+
+  const res = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ query }),
+    // Enable ISR with cache tags and revalidation
+    next: {
+      tags: ["posts"],
+      revalidate: preview ? 0 : 3600, // Don't cache preview, cache production for 1 hour
+    },
+  });
+
+  const json = await res.json();
+
+  if (!res.ok || json?.errors) {
+    // Surface detailed errors in server logs to make debugging easier locally
+    console.error("Contentful GraphQL error:", {
+      status: res.status,
+      statusText: res.statusText,
+      errors: json?.errors,
+      message: json?.message,
+    });
+    throw new Error(
+      `Contentful request failed (${res.status}). Check tokens/space/environment and that content types/entries exist.`
+    );
+  }
+
+  return json;
 }
 
 function extractPost(fetchResponse: any): any {

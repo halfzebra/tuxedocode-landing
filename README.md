@@ -1,4 +1,4 @@
-# Tuxedo Code
+# ⋈ Tuxedo Code
 
 Professional software development company website built with Next.js and Contentful CMS.
 

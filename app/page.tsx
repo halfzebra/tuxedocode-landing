@@ -8,12 +8,13 @@ import MoreStories from "./more-stories";
 import CustomerLogos from "./customer-logos";
 
 import { getAllPosts, getAllCustomers } from "@/lib/api";
+import { COMPANY_NAME } from "@/lib/constants";
 
 function Intro() {
   return (
     <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
       <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
-        Tuxedo Code
+        {COMPANY_NAME}
       </h1>
       <h2 className="text-center md:text-left text-lg mt-5 md:pl-8">
         Premium software development and consulting services for modern
@@ -73,6 +74,7 @@ export default async function Page() {
   return (
     <div className="container mx-auto px-5">
       <Intro />
+      <CustomerLogos customers={allCustomers} />
       {heroPost && (
         <HeroPost
           title={heroPost.title}
@@ -83,7 +85,6 @@ export default async function Page() {
           excerpt={heroPost.excerpt}
         />
       )}
-      <CustomerLogos customers={allCustomers} />
       <MoreStories morePosts={morePosts} />
     </div>
   );

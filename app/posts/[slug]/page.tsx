@@ -8,6 +8,7 @@ import CoverImage from "../../cover-image";
 
 import { Markdown } from "@/lib/markdown";
 import { getAllPosts, getPostAndMorePosts } from "@/lib/api";
+import { COMPANY_NAME } from "@/lib/constants";
 
 export async function generateStaticParams() {
   const allPosts = await getAllPosts(false);
@@ -30,7 +31,7 @@ export default async function PostPage({
     <div className="container mx-auto px-5">
       <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
         <Link href="/" className="hover:underline">
-          Tuxedo Code
+          {COMPANY_NAME}
         </Link>
         {" > "}
         <span className="text-gray-600">Insights</span>

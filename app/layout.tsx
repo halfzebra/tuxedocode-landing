@@ -1,8 +1,9 @@
+import { COMPANY_NAME } from "@/lib/constants";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
 export const metadata = {
-  title: "Tuxedo Code - Premium Software Development",
+  title: `${COMPANY_NAME} - Premium Software Development`,
   description:
     "Professional software development and consulting services. We build modern, scalable applications for businesses.",
 };
