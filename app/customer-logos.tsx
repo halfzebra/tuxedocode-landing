@@ -29,7 +29,7 @@ export default function CustomerLogos({
     <section className="py-16">
       <div className="container mx-auto px-5">
         <h2 className="mb-8 text-4xl md:text-5xl font-bold tracking-tighter leading-tight text-center">
-          Trusted Partners
+          I've had the pleasure of working for
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
           {customers.map((customer, index) => (
