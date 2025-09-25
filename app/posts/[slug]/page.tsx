@@ -68,3 +68,6 @@ export default async function PostPage({
     </div>
   );
 }
+
+// Enable ISR: Regenerate individual posts at most once every hour (3600 seconds)
+export const revalidate = 3600;

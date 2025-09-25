@@ -99,3 +99,6 @@ export default async function Page() {
     </div>
   );
 }
+
+// Enable ISR: Regenerate this page at most once every hour (3600 seconds)
+export const revalidate = 3600;
