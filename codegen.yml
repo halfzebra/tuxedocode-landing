@@ -1,0 +1,22 @@
+overwrite: true
+schema:
+  - https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}:
+      headers:
+        Authorization: "Bearer ${CONTENTFUL_ACCESS_TOKEN}"
+generates:
+  lib/generated/contentful-types.ts:
+    plugins:
+      - "typescript"
+    config:
+      enumsAsTypes: true
+      scalars:
+        DateTime: string
+        Date: string
+        JSON: any
+      namingConvention:
+        typeNames: pascal-case#pascalCase
+        enumValues: upper-case#upperCase
+        
+hooks:
+  afterOneFileWrite:
+    - prettier --write

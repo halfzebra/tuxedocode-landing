@@ -7,7 +7,8 @@ import Avatar from "./avatar";
 import MoreStories from "./more-stories";
 import CustomerLogos from "./customer-logos";
 
-import { getAllPosts, getAllCustomers } from "@/lib/api";
+import { getAllPosts } from "@/lib/api";
+import { getAllCustomers } from "@/lib/typed-api";
 import { COMPANY_NAME } from "@/lib/constants";
 
 function Intro() {
