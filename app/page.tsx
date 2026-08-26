@@ -7,9 +7,10 @@ import Avatar from "./avatar";
 import MoreStories from "./more-stories";
 import CustomerLogos from "./customer-logos";
 
-import { getAllPosts } from "@/lib/api";
-import { getAllCustomers } from "@/lib/typed-api";
+import { getAllPosts, getAllCustomers } from "@/lib/api";
 import { COMPANY_NAME } from "@/lib/constants";
+
+import { Post } from "@/lib/generated/contentful-types";
 
 function Intro() {
   return (
@@ -25,21 +26,7 @@ function Intro() {
   );
 }
 
-function HeroPost({
-  title,
-  coverImage,
-  date,
-  excerpt,
-  author,
-  slug,
-}: {
-  title: string;
-  coverImage: any;
-  date: string;
-  excerpt: string;
-  author: any;
-  slug: string;
-}) {
+function HeroPost({ title, coverImage, date, excerpt, author, slug }: Post) {
   return (
     <section>
       <div className="mb-8 md:mb-16">
