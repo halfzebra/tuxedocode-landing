@@ -4,9 +4,13 @@ export default function Avatar({
   name,
   picture,
 }: {
-  name: string;
-  picture: any;
+  name?: string | null;
+  picture?: { url?: string | null } | null;
 }) {
+  if (!name || !picture?.url) {
+    return null;
+  }
+
   return (
     <div className="flex items-center">
       <div className="mr-4 w-12 h-12">

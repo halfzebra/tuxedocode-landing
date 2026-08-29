@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
 
 import MoreStories from "../../more-stories";
@@ -27,6 +28,10 @@ export default async function PostPage({
   const { isEnabled } = await draftMode();
   const { post, morePosts } = await getPostAndMorePosts(slug, isEnabled);
 
+  if (!post) {
+    notFound();
+  }
+
   return (
     <div className="container mx-auto px-5">
       <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
@@ -41,18 +46,14 @@ export default async function PostPage({
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
-          {post.author && (
-            <Avatar name={post.author.name} picture={post.author.picture} />
-          )}
+          <Avatar name={post.author?.name} picture={post.author?.picture} />
         </div>
         <div className="mb-8 sm:mx-0 md:mb-16">
-          <CoverImage title={post.title} url={post.coverImage.url} />
+          <CoverImage title={post.title} url={post.coverImage?.url} />
         </div>
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 block md:hidden">
-            {post.author && (
-              <Avatar name={post.author.name} picture={post.author.picture} />
-            )}
+            <Avatar name={post.author?.name} picture={post.author?.picture} />
           </div>
           <div className="mb-6 text-lg">
             <Date dateString={post.date} />

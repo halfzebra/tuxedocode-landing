@@ -107,7 +107,10 @@ export async function getPostBySlug(
 /**
  * Get post + related posts - everything you need for a blog post page
  */
-export async function getPostAndMorePosts(slug: string, preview = false) {
+export async function getPostAndMorePosts(
+  slug: string,
+  preview = false
+): Promise<{ post: Post | null; morePosts: Post[] }> {
   const client = preview ? contentfulPreviewClient : contentfulClient;
 
   const [postResponse, morePostsResponse] = await Promise.all([

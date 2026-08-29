@@ -10,13 +10,19 @@ export default function CoverImage({
   url,
   slug,
 }: {
-  title: string;
-  url: string;
-  slug?: string;
+  title?: string | null;
+  url?: string | null;
+  slug?: string | null;
 }) {
+  if (!url) {
+    return null;
+  }
+
+  const alt = title ? `Cover Image for ${title}` : "Cover image";
+
   const image = (
     <ContentfulImage
-      alt={`Cover Image for ${title}`}
+      alt={alt}
       priority
       width={2000}
       height={1000}
@@ -30,7 +36,7 @@ export default function CoverImage({
   return (
     <div className="sm:mx-0">
       {slug ? (
-        <Link href={`/posts/${slug}`} aria-label={title}>
+        <Link href={`/posts/${slug}`} aria-label={alt}>
           {image}
         </Link>
       ) : (
