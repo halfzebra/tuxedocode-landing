@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
+    "prebuild": "graphql-codegen",
     "build": "next build",
     "start": "next start",
     "setup": "node ./lib/setup.js",
