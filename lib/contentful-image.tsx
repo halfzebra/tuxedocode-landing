@@ -10,7 +10,7 @@ interface ContentfulImageProps {
 }
 
 const contentfulLoader = ({ src, width, quality }: ContentfulImageProps) => {
-  return `${src}?w=${width}&q=${quality || 75}&fmt=webp`;
+  return `${src}?w=${width}&q=${quality || 75}`;
 };
 
 export default function ContentfulImage(props: ContentfulImageProps) {
