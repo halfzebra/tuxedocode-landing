@@ -2,14 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
 
-import MoreStories from "../../more-stories";
-import Avatar from "../../avatar";
-import Date from "../../date";
 import CoverImage from "../../cover-image";
+import Date from "../../date";
+import Byline from "../../byline";
 
 import { Markdown } from "@/lib/markdown";
-import { getAllPosts, getPostAndMorePosts } from "@/lib/api";
-import { COMPANY_NAME } from "@/lib/constants";
+import { getAllPosts, getPostBySlug } from "@/lib/api";
+import { CONTACT_EMAIL } from "@/lib/constants";
+import { getPostCategory } from "@/lib/post-categories";
+import { getReadingTime } from "@/lib/reading-time";
 
 export async function generateStaticParams() {
   const allPosts = await getAllPosts(false);
@@ -26,49 +27,47 @@ export default async function PostPage({
 }) {
   const { slug } = await params;
   const { isEnabled } = await draftMode();
-  const { post, morePosts } = await getPostAndMorePosts(slug, isEnabled);
+  const post = await getPostBySlug(slug, isEnabled);
 
   if (!post) {
     notFound();
   }
 
   return (
-    <div className="container mx-auto px-5">
-      <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <Link href="/" className="hover:underline">
-          {COMPANY_NAME}
-        </Link>
-        {" > "}
-        <span className="text-gray-600">Insights</span>
-      </h2>
-      <article>
-        <h1 className="mb-12 text-center text-6xl font-bold leading-tight tracking-tighter md:text-left md:text-7xl md:leading-none lg:text-8xl">
+    <article>
+      <div className="mx-auto max-w-[1180px] px-8 pt-14">
+        <CoverImage title={post.title} url={post.coverImage?.url} />
+      </div>
+      <div className="mx-auto max-w-[720px] px-8 pt-14 pb-24">
+        <p className="mb-5 font-mono text-[11px] tracking-[0.12em] text-label uppercase">
+          {getPostCategory(post.slug)} · <Date dateString={post.date} />
+        </p>
+        <h1 className="mb-7 text-[32px] leading-[1.1] font-extrabold tracking-[-0.04em] text-balance md:text-[46px] md:leading-[1.08]">
           {post.title}
         </h1>
-        <div className="hidden md:mb-12 md:block">
-          <Avatar name={post.author?.name} picture={post.author?.picture} />
-        </div>
-        <div className="mb-8 sm:mx-0 md:mb-16">
-          <CoverImage title={post.title} url={post.coverImage?.url} />
-        </div>
-        <div className="mx-auto max-w-2xl">
-          <div className="mb-6 block md:hidden">
-            <Avatar name={post.author?.name} picture={post.author?.picture} />
-          </div>
-          <div className="mb-6 text-lg">
-            <Date dateString={post.date} />
-          </div>
-        </div>
+        <Byline
+          authorName={post.author?.name}
+          readingTimeMinutes={getReadingTime(post.content)}
+        />
 
-        <div className="mx-auto max-w-2xl">
-          <div className="prose">
-            <Markdown content={post.content} />
-          </div>
+        <Markdown content={post.content} />
+
+        <div className="mt-13 flex items-center justify-between gap-6 border-t border-rule pt-8">
+          <Link
+            href="/blog"
+            className="font-mono text-[11px] tracking-[0.1em] text-label uppercase"
+          >
+            ← All posts
+          </Link>
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="border-b border-[#c9ccd1] pb-[2px] text-[15px] font-semibold"
+          >
+            Discuss a project
+          </a>
         </div>
-      </article>
-      <hr className="border-accent-2 mt-28 mb-24" />
-      <MoreStories morePosts={morePosts} />
-    </div>
+      </div>
+    </article>
   );
 }
 

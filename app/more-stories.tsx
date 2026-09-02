@@ -1,36 +1,27 @@
 import Link from "next/link";
-import Avatar from "./avatar";
 import DateComponent from "./date";
-import CoverImage from "./cover-image";
 import { type Post } from "@/lib/generated/contentful-types";
+import { getPostCategory } from "@/lib/post-categories";
 
 function PostPreview({
   title,
-  coverImage,
   date,
   excerpt,
-  author,
   slug,
-}: Pick<
-  Post,
-  "title" | "coverImage" | "date" | "excerpt" | "author" | "slug"
->) {
+}: Pick<Post, "title" | "date" | "excerpt" | "slug">) {
   return (
-    <div>
-      <div className="mb-5">
-        <CoverImage title={title} slug={slug} url={coverImage?.url} />
-      </div>
-      <h3 className="text-3xl mb-3 leading-snug">
-        <Link href={`/posts/${slug}`} className="hover:underline">
-          {title}
-        </Link>
+    <Link
+      href={`/posts/${slug}`}
+      className="flex flex-col gap-[14px] border-t border-rule pt-5 hover:border-ink"
+    >
+      <p className="font-mono text-[10px] tracking-[0.1em] text-label-light uppercase">
+        <DateComponent dateString={date} /> · {getPostCategory(slug)}
+      </p>
+      <h3 className="text-xl leading-[1.25] font-bold tracking-[-0.025em] text-pretty">
+        {title}
       </h3>
-      <div className="text-lg mb-4">
-        <DateComponent dateString={date} />
-      </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-      <Avatar name={author?.name} picture={author?.picture} />
-    </div>
+      <p className="text-[15px] leading-[1.6] text-meta">{excerpt}</p>
+    </Link>
   );
 }
 
@@ -46,18 +37,16 @@ export default function MoreStories({ morePosts }: { morePosts: Post[] }) {
   }
 
   return (
-    <section>
-      <h2 className="mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">
-        Latest Insights
+    <section className="mx-auto max-w-[1180px] px-8 pt-16 pb-24">
+      <h2 className="mb-6 font-mono text-[11px] font-normal tracking-[0.16em] text-label uppercase">
+        More stories
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16 lg:gap-x-32 gap-y-20 md:gap-y-32 mb-32">
+      <div className="grid grid-cols-1 gap-9 md:grid-cols-3">
         {postsWithSlug.map((post) => (
           <PostPreview
             key={post.slug}
             title={post.title}
-            coverImage={post.coverImage}
             date={post.date}
-            author={post.author}
             slug={post.slug}
             excerpt={post.excerpt}
           />

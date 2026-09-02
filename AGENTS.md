@@ -4,6 +4,8 @@
 
 Next.js 16 company website with Contentful CMS integration. Uses App Router, TypeScript, and Tailwind CSS v4. Package manager is **pnpm** (pnpm-lock.yaml is the source of truth — don't use npm/yarn). Node/pnpm versions are pinned in `mise.toml` (node 22, pnpm 10).
 
+Project uses `mise`
+
 > Note: `MIGRATION.md` in the repo root describes a hypothetical move off Contentful to local Markdown files. That work was never implemented — the code below is what's actually in the repo. Don't treat that file as current architecture.
 
 ## Key Architecture Patterns
@@ -13,7 +15,8 @@ Next.js 16 company website with Contentful CMS integration. Uses App Router, Typ
 - **API layer**: `lib/api.ts` — hand-written GraphQL query strings, executed via `executeQuery()`, typed against generated Contentful types
 - **GraphQL client**: `lib/contentful-client.ts` — builds the `graphql-request` clients (regular + preview) and throws descriptive errors if `CONTENTFUL_SPACE_ID`/tokens are missing
 - **Generated types**: `lib/generated/contentful-types.ts`, produced by `pnpm run codegen` (config in `codegen.yml`); imported directly by `lib/api.ts` and components (e.g. `app/page.tsx`, `app/more-stories.tsx`) as `Post`, `Customer`, `Asset` — there is no separate `typed-api.ts` wrapper
-- **Images**: Use `ContentfulImage` component from `lib/contentful-image.tsx` for Contentful assets
+- **Images**: Use `ContentfulImage` from `lib/contentful-image.tsx` for Contentful assets; use `LocalImage` from `lib/local-image.tsx` for static files in `public/`. `next.config.js` sets `images.loader: "custom"` globally with no `loaderFile`, so **every** `next/image` usage — local files included — needs an explicit `loader` prop or the build fails. `LocalImage` supplies an identity loader *and* `unoptimized` together — both are required; `unoptimized` alone passes `pnpm dev` but breaks `pnpm build`'s static prerender with a "missing loader" error under this config.
+- **Fixed-height/cropped images** (hero banners, card covers): use `fill` inside a `relative`-sized wrapper (see `app/cover-image.tsx`), not explicit `width`/`height` plus a CSS override — the latter triggers Next's aspect-ratio console warnings.
 - **Rich Text**: Render with `@contentful/rich-text-react-renderer` in `lib/markdown.tsx`
 
 ### Environment Setup
@@ -34,17 +37,21 @@ CONTENTFUL_MANAGEMENT_TOKEN=
 
 ### Content Types
 
-- **Post**: `slug`, `title`, `coverImage`, `date`, `author`, `excerpt`, `content` (rich text JSON)
+- **Post**: `slug`, `title`, `coverImage`, `date`, `author`, `excerpt`, `content` (rich text JSON). **No `category` field** — blog category tags shown in the UI come from a hand-maintained `slug → category` lookup in `lib/post-categories.ts`, updated manually per post. Reading time is likewise computed client-side from `content.json` (`lib/reading-time.ts`), not stored in Contentful.
 - **Customer**: `name`, `website`, `logo` (asset)
-- **Author**: `name`, `picture` (asset)
+- **Author**: `name`, `picture` (asset) — note the site no longer renders author photos anywhere (see Design System below); `picture` is unused in the current UI.
 
 ### App Router Structure
 
 ```
 app/
-├── layout.tsx                # Global layout with footer
-├── page.tsx                  # Homepage with hero post + customer logos
-├── posts/[slug]/              # Dynamic blog post pages
+├── layout.tsx                # Global layout: sticky Header + flex-1 main + Footer
+├── header.tsx / footer.tsx    # Site chrome (Header is a client component for active-link state)
+├── page.tsx                  # Homepage: hero + customer-logo trust band + featured/more posts
+├── services/page.tsx          # Services page (static copy, not Contentful-driven)
+├── blog/page.tsx               # Blog index (all posts, date + title + excerpt)
+├── about/page.tsx              # About page (fully static, no Contentful fetch)
+├── posts/[slug]/               # Dynamic blog post pages
 ├── api/draft/                 # Enable Contentful preview mode (redirects to slug)
 ├── api/local-enable-draft/    # Enable preview mode locally only; 403s in production
 ├── api/disable-draft/         # Exit preview mode
@@ -65,6 +72,12 @@ There is currently **no test suite and no lint script** configured — don't ass
 - **Production**: 1-hour ISR cache (`revalidate: 3600`)
 - **Preview**: No caching (`revalidate: 0`)
 - **Cache tags**: `["posts"]`, invalidated via `revalidateTag` in `app/api/revalidate/route.ts`
+
+### Design System
+
+- Color and font tokens (ink, body, accent, rule, etc.; Manrope + Space Mono) are defined once in `app/globals.css`'s `@theme` block, generating matching Tailwind utilities (`text-ink`, `bg-surface`, `border-rule`, `font-mono`, …). Reuse these instead of introducing new ad-hoc colors or fonts.
+- Shared chrome primitives: `app/monogram.tsx` (the "TC" mark — used in Header, Footer, and post bylines), `app/byline.tsx` (post author line — a static monogram, not a per-author photo; `app/avatar.tsx` was removed for this reason).
+- `app/layout.tsx` uses the flex sticky-footer pattern (`flex min-h-screen flex-col` on the wrapper, `flex-1` on `<main>`) so the footer pins to the viewport bottom on short pages instead of trailing with a gap. Preserve this if editing the layout.
 
 ### Common Patterns
 

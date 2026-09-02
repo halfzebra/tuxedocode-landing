@@ -1,2 +1,25 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
+
+@theme {
+  --color-ink: #0b0c0e;
+  --color-ink-80: #1a1c20;
+  --color-body: #2b2e34;
+  --color-body-muted: #43474e;
+  --color-meta: #5b6068;
+  --color-label: #6b6f76;
+  --color-label-light: #8b9098;
+  --color-rule: #e8e8e6;
+  --color-rule-dark: #23262b;
+  --color-rule-dark-2: #3a3f46;
+  --color-surface: #fafafa;
+  --color-accent: #2f5fa8;
+  --color-accent-tint: #dbe6f5;
+
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-space-mono);
+}
+
+::selection {
+  background: var(--color-accent-tint);
+}

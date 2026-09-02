@@ -1,4 +1,5 @@
 import { COMPANY_NAME, CONTACT_EMAIL } from "@/lib/constants";
+import LocalImage from "@/lib/local-image";
 
 export const metadata = {
   title: `Services - ${COMPANY_NAME}`,
@@ -41,36 +42,62 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <div className="container mx-auto px-5">
-      <section className="mt-16 mb-16 md:mb-12">
-        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight">
+    <div className="mx-auto max-w-[1180px] px-8">
+      <section className="pt-16 md:pt-20">
+        <h1 className="mb-6 text-[40px] leading-[1.05] font-extrabold tracking-[-0.045em] md:text-[60px] md:leading-[1.03]">
           Services
         </h1>
-        <h2 className="text-lg mt-5 max-w-2xl">
+        <p className="mb-14 max-w-[62ch] text-lg leading-[1.55] text-body-muted text-pretty">
           13+ years shipping large-scale systems, complex UIs, and production
           LLM pipelines for fintech, pharma, and public-sector clients —
           available for freelance and consulting engagements.
-        </h2>
+        </p>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 mb-20 md:mb-28">
-        {services.map((service) => (
-          <div key={service.title}>
-            <h3 className="text-2xl font-bold tracking-tighter leading-tight mb-3">
+      <section className="mb-16 grid grid-cols-1 gap-px border border-rule bg-rule sm:grid-cols-2 md:grid-cols-3">
+        {services.map((service, index) => (
+          <div
+            key={service.title}
+            className="flex min-h-[210px] flex-col gap-[14px] bg-white p-[30px] pt-9 pb-10 hover:bg-surface"
+          >
+            <span className="font-mono text-[10px] tracking-[0.12em] text-label-light">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h2 className="text-xl leading-[1.25] font-bold tracking-[-0.025em]">
               {service.title}
-            </h3>
-            <p className="text-lg leading-relaxed">{service.description}</p>
+            </h2>
+            <p className="text-[15px] leading-[1.6] text-meta">
+              {service.description}
+            </p>
           </div>
         ))}
       </section>
 
-      <section className="mb-20 md:mb-28 text-center">
-        <a
-          href={`mailto:${CONTACT_EMAIL}`}
-          className="inline-block bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 duration-200 transition-colors"
-        >
-          Discuss Your Project
-        </a>
+      <section className="mb-24 grid grid-cols-1 border border-rule md:grid-cols-2">
+        <div className="relative h-[220px] w-full md:h-[300px]">
+          <LocalImage
+            src="/images/services-closing.jpg"
+            alt="The fort seen between harbour buildings at low winter sun"
+            fill
+            sizes="(min-width: 1180px) 589px, 100vw"
+            className="object-cover object-[50%_55%]"
+          />
+        </div>
+        <div className="flex flex-col justify-center gap-[18px] p-9 md:p-10">
+          <h2 className="text-2xl leading-[1.15] font-extrabold tracking-[-0.03em] text-balance md:text-[30px]">
+            One consultant, full accountability
+          </h2>
+          <p className="text-base leading-[1.6] text-body-muted text-pretty">
+            You work directly with the person writing the code. No account
+            layer, no handover between teams.
+          </p>
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="self-start bg-ink px-6 py-[13px] text-[15px] font-semibold text-white hover:bg-accent"
+          >
+            Get In Touch
+          </a>
+        </div>
       </section>
     </div>
   );

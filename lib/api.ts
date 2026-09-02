@@ -27,9 +27,6 @@ export async function getAllPosts(isDraftMode = false): Promise<Post[]> {
           date
           author {
             name
-            picture {
-              url
-            }
           }
           excerpt
           content {
@@ -76,9 +73,6 @@ export async function getPostBySlug(
           date
           author {
             name
-            picture {
-              url
-            }
           }
           excerpt
           content {
@@ -102,100 +96,6 @@ export async function getPostBySlug(
 
   const response = await executeQuery(client, query);
   return response.postCollection?.items[0] || null;
-}
-
-/**
- * Get post + related posts - everything you need for a blog post page
- */
-export async function getPostAndMorePosts(
-  slug: string,
-  preview = false
-): Promise<{ post: Post | null; morePosts: Post[] }> {
-  const client = preview ? contentfulPreviewClient : contentfulClient;
-
-  const [postResponse, morePostsResponse] = await Promise.all([
-    executeQuery(
-      client,
-      `
-      query {
-        postCollection(where: { slug: "${slug}" }, preview: ${preview}, limit: 1) {
-          items {
-            slug
-            title
-            coverImage {
-              url
-            }
-            date
-            author {
-              name
-              picture {
-                url
-              }
-            }
-            excerpt
-            content {
-              json
-              links {
-                assets {
-                  block {
-                    sys {
-                      id
-                    }
-                    url
-                    description
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `
-    ),
-    executeQuery(
-      client,
-      `
-      query {
-        postCollection(where: { slug_not_in: ["${slug}"] }, order: date_DESC, preview: ${preview}, limit: 2) {
-          items {
-            slug
-            title
-            coverImage {
-              url
-            }
-            date
-            author {
-              name
-              picture {
-                url
-              }
-            }
-            excerpt
-            content {
-              json
-              links {
-                assets {
-                  block {
-                    sys {
-                      id
-                    }
-                    url
-                    description
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `
-    ),
-  ]);
-
-  return {
-    post: postResponse.postCollection?.items[0] || null,
-    morePosts: morePostsResponse.postCollection?.items || [],
-  };
 }
 
 /**
