@@ -1,5 +1,5 @@
 import { COMPANY_NAME, CONTACT_EMAIL } from "@/lib/constants";
-import LocalImage from "@/lib/local-image";
+import Image from "next/image";
 
 export const metadata = {
   title: `Services - ${COMPANY_NAME}`,
@@ -75,7 +75,7 @@ export default function ServicesPage() {
 
       <section className="mb-24 grid grid-cols-1 border border-rule md:grid-cols-2">
         <div className="relative h-[220px] w-full md:h-[300px]">
-          <LocalImage
+          <Image
             src="/images/services-closing.jpg"
             alt="The fort seen between harbour buildings at low winter sun"
             fill

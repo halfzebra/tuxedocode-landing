@@ -2,8 +2,7 @@ import Link from "next/link";
 import { draftMode } from "next/headers";
 
 import Date from "./date";
-import LocalImage from "@/lib/local-image";
-import ContentfulImage from "@/lib/contentful-image";
+import Image from "next/image";
 import MoreStories from "./more-stories";
 import CustomerLogos from "./customer-logos";
 
@@ -45,7 +44,7 @@ function Hero() {
         </div>
         <div>
           <div className="relative h-[300px] w-full md:h-[460px]">
-            <LocalImage
+            <Image
               src="/images/hero-harbour.jpg"
               alt="Copenhagen harbour mouth, fort and offshore wind turbines"
               fill
@@ -89,7 +88,7 @@ function FeaturedPost({
       >
         {coverImage?.url && (
           <div className="relative h-[220px] w-full md:h-[340px]">
-            <ContentfulImage
+            <Image
               alt={title ? `Cover image for ${title}` : "Cover image"}
               fill
               sizes="(min-width: 1180px) 641px, 100vw"

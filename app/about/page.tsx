@@ -1,4 +1,4 @@
-import LocalImage from "@/lib/local-image";
+import Image from "next/image";
 import { COMPANY_NAME } from "@/lib/constants";
 
 export const metadata = {
@@ -44,7 +44,7 @@ export default function AboutPage() {
         </div>
         <div>
           <div className="relative aspect-square w-full">
-            <LocalImage
+            <Image
               src="/images/about-portrait.jpg"
               alt="Eduard Kyvenko"
               fill

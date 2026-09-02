@@ -1,4 +1,4 @@
-import ContentfulImage from "@/lib/contentful-image";
+import Image from "next/image";
 import { type Customer } from "@/lib/generated/contentful-types";
 
 export default function CustomerLogos({
@@ -33,7 +33,7 @@ export default function CustomerLogos({
                 className="transition-opacity hover:opacity-70"
                 title={customer.name!}
               >
-                <ContentfulImage
+                <Image
                   src={customer.logo!.url!}
                   alt={
                     customer.logo!.description ||

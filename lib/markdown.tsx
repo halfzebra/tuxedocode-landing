@@ -1,7 +1,7 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 
-import ContentfulImage from "@/lib/contentful-image";
+import Image from "next/image";
 import { type Asset, type Post } from "@/lib/generated/contentful-types";
 
 function RichTextAsset({ id, assets }: { id: string; assets: Asset[] }) {
@@ -9,7 +9,7 @@ function RichTextAsset({ id, assets }: { id: string; assets: Asset[] }) {
 
   if (asset?.url) {
     return (
-      <ContentfulImage
+      <Image
         src={asset.url}
         alt={asset.description || ""}
         width={1400}

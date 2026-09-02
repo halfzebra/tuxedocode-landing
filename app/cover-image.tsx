@@ -1,4 +1,4 @@
-import ContentfulImage from "../lib/contentful-image";
+import Image from "next/image";
 
 export default function CoverImage({
   title,
@@ -15,7 +15,7 @@ export default function CoverImage({
 
   return (
     <div className="relative h-[260px] w-full md:h-[420px]">
-      <ContentfulImage
+      <Image
         alt={alt}
         priority
         fill
