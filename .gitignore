@@ -41,3 +41,5 @@ next-env.d.ts
 
 # generated files
 /lib/generated/
+
+.playwringt-mcp
