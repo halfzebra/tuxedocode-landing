@@ -70,7 +70,7 @@ function FeaturedPost({
   slug,
 }: Pick<Post, "title" | "coverImage" | "date" | "excerpt" | "slug">) {
   return (
-    <section className="mx-auto max-w-[1180px] px-8 pt-20">
+    <section className="mx-auto max-w-[1180px] px-8 pt-20 pb-20 md:pt-[88px] md:pb-[72px]">
       <div className="mb-7 flex items-baseline justify-between gap-6">
         <h2 className="text-[28px] font-extrabold tracking-[-0.03em]">
           Latest writing

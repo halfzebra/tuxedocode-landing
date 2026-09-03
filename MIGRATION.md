@@ -57,39 +57,46 @@ Not a fit. Sticking with the local-files approach below.
     there's no automatic compression. Adopt a policy of resizing/compressing images before commit
     (either a pre-commit script or a step in the CMS upload flow) so the repo doesn't grow
     unbounded.
-- **Local editing**: Decap CMS at `/admin/index.html`. Two distinct modes, not one:
-  - *Local dev*: `local_backend: true`, run `pnpm run cms` (starts `decap-server`) alongside
-    `pnpm dev` — writes straight to disk, no git involved.
-  - *Production editing*: needs a git-backed Decap backend (git-gateway + an OAuth app, or a
-    GitHub-token backend) so edits become real commits/PRs. This is unimplemented in the local-only
-    setup above and is its own setup task — see open decisions below.
+- **Local editing**: Decap CMS at `/admin/index.html`, `local_backend: true`, run `pnpm run cms`
+  (starts `decap-server`) alongside `pnpm dev` — writes straight to disk, no git involved.
+  - **Hard constraint: the CMS must never be part of the deployed website.** `public/admin/`
+    (the Decap config + `index.html`) is `.gitignore`d, full stop — not merely kept off by a
+    runtime check like the existing `local-enable-draft` 403-in-production pattern. A runtime
+    check can be misconfigured or bypassed; a file that was never committed cannot ship, because
+    Vercel builds from what's in git. If `/admin` needs to exist as a real file at all (rather
+    than generated locally by a setup script), it lives outside `public/` under something
+    `next build` never touches, and gets copied into `public/admin/` only by the local dev
+    command — never by the build used for deployment.
+  - Production content editing is therefore just: edit the Markdown/JSON file directly and commit
+    (see open decisions — this also settles whether a git-gateway/OAuth backend is worth building:
+    it isn't, since there's no production Decap instance to authenticate against).
 - **Hosting**: Vercel — `git push` to publish, zero-config image optimization/CDN.
 
 ## One-time content migration (Contentful → files)
 
-Not yet started. Needed before the Contentful code can be removed:
+Actual content as of writing: 1 post, a handful of author/customer entries, ~9 images total. That's
+small enough to move by hand — no export/transform script needed:
 
-1. Script (e.g. `scripts/migrate-from-contentful.ts`) using the Contentful Management API to pull
-   all `Post`/`Author`/`Customer` entries.
-2. Transform each `Post`'s rich-text JSON to Markdown, resolving embedded assets/entries inline
-   (Contentful rich text can embed images and linked entries — these need explicit handling, not
-   a generic JSON-to-Markdown pass).
-3. Download all referenced assets (post cover images, author pictures, customer logos) into
-   `public/images/...` and rewrite references to local paths.
-4. Write `content/posts/*.md`, `content/authors/*.json`, `content/customers/*.json`.
-5. Diff rendered output (old Contentful-backed pages vs. new file-backed pages) before cutting
-   over, so content isn't silently lost or mangled in translation.
+1. Open each entry in the Contentful web UI, copy the text into the corresponding
+   `content/posts/*.md` / `content/authors/*.json` / `content/customers/*.json` file, re-typing
+   any rich text as plain Markdown by eye.
+2. Download the ~9 image assets from Contentful's UI and drop them into `public/images/...`.
+3. Eyeball the rendered pages against the live Contentful-backed site before cutting over.
+
+If content volume grows substantially before this migration happens, revisit — a script only
+starts paying for itself well past this scale.
+
+## Resolved decisions
+
+1. ~~Decap admin bundle self-hosted vs CDN~~ — moot. `/admin` never deploys at all (see "Hard
+   constraint" above), so it doesn't matter whether the bundle loads from `unpkg.com/decap-cms`
+   or is vendored — that only affects local dev, where internet access is a non-issue.
+2. ~~Production editing backend (git-gateway/OAuth)~~ — not needed. There's no production Decap
+   instance to log into; production edits are direct commits to the Markdown/JSON files.
 
 ## Open decisions (resolve before starting implementation)
 
-1. **Decap admin bundle**: currently would load from a CDN (`unpkg.com/decap-cms`), meaning
-   `/admin` requires internet access and depends on an external host staying up. Decide: vendor
-   the bundle into the repo (self-host), or keep `public/admin/` out of git entirely so it never
-   ships to production and lives only in local dev.
-2. **Production editing backend**: is a git-gateway/OAuth setup worth it for a one-person site, or
-   is "edit the Markdown file directly and commit" an acceptable workflow, skipping Decap in
-   production entirely?
-3. **Build cost/latency tradeoff**: every content change now requires a full rebuild + redeploy
+1. **Build cost/latency tradeoff**: every content change now requires a full rebuild + redeploy
    instead of Contentful's on-demand `revalidateTag`. Fine for a low-traffic single-author blog,
    but worth confirming that's an acceptable tradeoff before removing ISR.
 
@@ -99,6 +106,8 @@ Not yet started. Needed before the Contentful code can be removed:
 - [ ] `/`, `/posts/<slug>`, `/sitemap.xml` serve correctly locally
 - [ ] A PR/branch produces a Vercel preview deployment showing draft content, replacing
       `/api/draft`
-- [ ] Decap admin (in whichever backend mode was chosen above) can create a post and upload an
-      image end-to-end, and the resulting commit builds successfully
-- [ ] All existing Contentful content has been migrated and spot-checked against the live site
+- [ ] Decap admin works locally end-to-end (create a post, upload an image, commit) via `pnpm run cms`
+- [ ] The deployed production site returns 404 for `/admin` and `/admin/index.html` — confirms the
+      CMS genuinely never shipped, not just that no one linked to it
+- [ ] The 1 post + author/customer entries + ~9 images have been copied over and match the live
+      Contentful-backed site
