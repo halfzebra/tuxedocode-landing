@@ -24,7 +24,7 @@ export default function CustomerLogos({
           {validCustomers.map((customer, index) => (
             <div
               key={index}
-              className="flex h-[88px] items-center justify-center bg-surface p-4"
+              className="flex h-[88px] items-center justify-center bg-white p-4"
             >
               <a
                 href={customer.website!}

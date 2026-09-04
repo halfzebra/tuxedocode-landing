@@ -5,15 +5,17 @@ import { useEffect, useState } from "react";
 const THEME_EVENT = "tc-theme-change";
 
 function currentTheme(): "dark" | "light" {
-  return document.documentElement.getAttribute("data-theme") === "dark"
-    ? "dark"
-    : "light";
+  return document.documentElement.getAttribute("data-theme") === "light"
+    ? "light"
+    : "dark";
 }
 
 const VARIANTS = {
-  default: "border-rule text-label hover:border-ink hover:text-ink",
+  default:
+    "h-[34px] w-[34px] border border-rule text-label hover:border-ink hover:text-ink",
   inverse:
-    "border-rule-dark-2 text-footer-link hover:border-footer-ink hover:text-footer-ink",
+    "h-[34px] w-[34px] border border-rule-dark-2 text-footer-link hover:border-footer-ink hover:text-footer-ink",
+  mobile: "h-11 w-11 border-0 text-label hover:text-ink",
 } as const;
 
 export default function ThemeToggle({
@@ -21,12 +23,12 @@ export default function ThemeToggle({
 }: {
   variant?: keyof typeof VARIANTS;
 }) {
-  // Starts in sync with the server-rendered (light) markup; the
-  // beforeInteractive theme script may have already set data-theme="dark"
+  // Starts in sync with the server-rendered (dark) markup; the
+  // beforeInteractive theme script may have already set data-theme="light"
   // on <html> by the time this mounts, so sync up right after mount rather
   // than reading the DOM during the initial render (which would mismatch
   // the SSR output and trigger a hydration error).
-  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     setTheme(currentTheme());
@@ -37,8 +39,8 @@ export default function ThemeToggle({
 
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
-    if (next === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
+    if (next === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
     } else {
       document.documentElement.removeAttribute("data-theme");
     }
@@ -52,7 +54,7 @@ export default function ThemeToggle({
       type="button"
       onClick={toggle}
       aria-label="Switch theme"
-      className={`flex h-[34px] w-[34px] shrink-0 items-center justify-center border font-mono text-xs ${VARIANTS[variant]}`}
+      className={`flex shrink-0 items-center justify-center font-mono text-xs ${VARIANTS[variant]}`}
     >
       {theme === "dark" ? "☾" : "☀"}
     </button>

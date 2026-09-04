@@ -2,31 +2,6 @@
 @config "../tailwind.config.ts";
 
 :root {
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --band: #fafafa;
-  --surface-hover: #fafafa;
-  --ink: #0b0c0e;
-  --ink-80: #1a1c20;
-  --rule: #e8e8e6;
-  --rule-soft: #c9ccd1;
-  --rule-invert: #3a3f46;
-  --body: #2b2e34;
-  --body-muted: #43474e;
-  --meta: #5b6068;
-  --label: #6b6f76;
-  --label-2: #8b9098;
-  --label-3: #a3a8b0;
-  --footer-bg: #0b0c0e;
-  --footer-ink: #ffffff;
-  --footer-rule: #23262b;
-  --footer-link: #b9bec6;
-  --accent: #2f5fa8;
-  --accent-soft: #dbe6f5;
-  --header-bg: rgba(255, 255, 255, 0.88);
-}
-
-:root[data-theme="dark"] {
   --bg: #0b0c0e;
   --surface: #121417;
   --band: #121417;
@@ -49,6 +24,37 @@
   --accent: #8fb6f2;
   --accent-soft: #26364d;
   --header-bg: rgba(11, 12, 14, 0.86);
+  --logo-bg: transparent;
+  --logo-fg: #eef0f2;
+  --logo-border: #eef0f2;
+}
+
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --band: #fafafa;
+  --surface-hover: #fafafa;
+  --ink: #0b0c0e;
+  --ink-80: #1a1c20;
+  --rule: #e8e8e6;
+  --rule-soft: #c9ccd1;
+  --rule-invert: #3a3f46;
+  --body: #2b2e34;
+  --body-muted: #43474e;
+  --meta: #5b6068;
+  --label: #6b6f76;
+  --label-2: #8b9098;
+  --label-3: #a3a8b0;
+  --footer-bg: #0b0c0e;
+  --footer-ink: #ffffff;
+  --footer-rule: #23262b;
+  --footer-link: #b9bec6;
+  --accent: #2f5fa8;
+  --accent-soft: #dbe6f5;
+  --header-bg: rgba(255, 255, 255, 0.88);
+  --logo-bg: #0b0c0e;
+  --logo-fg: #ffffff;
+  --logo-border: #0b0c0e;
 }
 
 @theme {
@@ -75,6 +81,9 @@
   --color-footer-link: var(--footer-link);
   --color-accent: var(--accent);
   --color-accent-tint: var(--accent-soft);
+  --color-logo-bg: var(--logo-bg);
+  --color-logo-fg: var(--logo-fg);
+  --color-logo-border: var(--logo-border);
 
   --font-sans: var(--font-manrope);
   --font-mono: var(--font-space-mono);

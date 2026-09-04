@@ -42,7 +42,7 @@ export default function RootLayout({
           id="theme-init"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("tc-theme");if(t==="dark"){document.documentElement.setAttribute("data-theme","dark")}}catch(e){}`,
+            __html: `try{var t=localStorage.getItem("tc-theme");if(t==="light"){document.documentElement.setAttribute("data-theme","light")}}catch(e){}`,
           }}
         />
         <section className="flex min-h-screen flex-col">

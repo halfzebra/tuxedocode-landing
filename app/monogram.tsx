@@ -1,6 +1,6 @@
 const VARIANTS = {
-  header: "w-[34px] h-[34px] bg-ink text-bg",
-  byline: "w-[32px] h-[32px] bg-ink text-bg",
+  header: "w-[34px] h-[34px] border border-logo-border bg-logo-bg text-logo-fg",
+  byline: "w-[32px] h-[32px] border border-logo-border bg-logo-bg text-logo-fg",
   footer: "w-[30px] h-[30px] border border-rule-dark-2 text-footer-ink",
 } as const;
 
