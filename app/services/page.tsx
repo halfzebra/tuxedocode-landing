@@ -58,7 +58,7 @@ export default function ServicesPage() {
         {services.map((service, index) => (
           <div
             key={service.title}
-            className="flex min-h-[210px] flex-col gap-[14px] bg-white p-[30px] pt-9 pb-10 hover:bg-surface"
+            className="flex min-h-[210px] flex-col gap-[14px] bg-surface p-[30px] pt-9 pb-10 hover:bg-surface-hover"
           >
             <span className="font-mono text-[10px] tracking-[0.12em] text-label-light">
               {String(index + 1).padStart(2, "0")}
@@ -93,7 +93,7 @@ export default function ServicesPage() {
           </p>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="self-start bg-ink px-6 py-[13px] text-[15px] font-semibold text-white hover:bg-accent"
+            className="self-start bg-ink px-6 py-[13px] text-[15px] font-semibold text-bg hover:bg-accent"
           >
             Get In Touch
           </a>

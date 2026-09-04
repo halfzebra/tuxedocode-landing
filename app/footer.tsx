@@ -4,22 +4,22 @@ import Monogram from "./monogram";
 
 export default function Footer() {
   return (
-    <footer className="bg-ink text-white">
+    <footer className="bg-footer-bg text-footer-ink">
       <div className="mx-auto max-w-[1180px] px-8 py-20 pb-10">
-        <div className="grid grid-cols-1 items-end gap-12 border-b border-rule-dark pb-14 md:grid-cols-[1.3fr_1fr]">
+        <div className="grid grid-cols-1 items-end gap-12 border-b border-footer-rule pb-14 md:grid-cols-[1.3fr_1fr]">
           <h2 className="text-[32px] leading-[1.1] font-extrabold tracking-[-0.04em] md:text-[44px] md:leading-[1.05]">
             Ready to elevate your software?
           </h2>
           <div className="flex flex-col items-start gap-[18px]">
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="bg-white px-7 py-[15px] text-[15px] font-bold text-ink hover:bg-accent-tint"
+              className="bg-footer-ink px-7 py-[15px] text-[15px] font-bold text-footer-bg hover:bg-accent hover:text-bg"
             >
               Get In Touch
             </a>
             <Link
               href="/services"
-              className="ml-7 border-b border-rule-dark-2 pb-[2px] text-[15px] font-medium text-[#b9bec6] hover:text-white"
+              className="ml-7 border-b border-rule-dark-2 pb-[2px] text-[15px] font-medium text-footer-link hover:text-footer-ink"
             >
               Our Services
             </Link>

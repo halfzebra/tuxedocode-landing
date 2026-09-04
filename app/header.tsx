@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import Monogram from "./monogram";
+import ThemeToggle from "./theme-toggle";
+import MobileNav from "./mobile-nav";
 import { CONTACT_EMAIL } from "@/lib/constants";
 
 const NAV = [
@@ -15,9 +18,14 @@ const NAV = [
 
 export default function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-rule bg-white/88 backdrop-blur-md">
+    <header className="sticky top-0 z-20 border-b border-rule bg-header backdrop-blur-md">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-8 px-8 py-[18px]">
         <Link href="/" className="flex items-center gap-3">
           <Monogram variant="header" />
@@ -44,12 +52,25 @@ export default function Header() {
           </div>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="bg-ink px-4 py-2 font-semibold text-white hover:bg-accent"
+            className="hidden bg-ink px-4 py-2 font-semibold text-bg hover:bg-accent md:inline-block"
           >
             Contact
           </a>
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+            className="-mr-[10px] flex h-11 w-11 flex-col items-end justify-center gap-[6px] md:hidden"
+          >
+            <span className="block h-[2px] w-6 bg-ink" />
+            <span className="block h-[2px] w-6 bg-ink" />
+          </button>
         </nav>
       </div>
+      {menuOpen && <MobileNav onClose={() => setMenuOpen(false)} />}
     </header>
   );
 }

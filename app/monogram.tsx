@@ -1,7 +1,7 @@
 const VARIANTS = {
-  header: "w-[34px] h-[34px] bg-ink text-white",
-  byline: "w-[32px] h-[32px] bg-ink text-white",
-  footer: "w-[30px] h-[30px] border border-rule-dark-2 text-white",
+  header: "w-[34px] h-[34px] bg-ink text-bg",
+  byline: "w-[32px] h-[32px] bg-ink text-bg",
+  footer: "w-[30px] h-[30px] border border-rule-dark-2 text-footer-ink",
 } as const;
 
 export default function Monogram({

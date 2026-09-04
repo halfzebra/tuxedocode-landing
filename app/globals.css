@@ -1,23 +1,88 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --band: #fafafa;
+  --surface-hover: #fafafa;
+  --ink: #0b0c0e;
+  --ink-80: #1a1c20;
+  --rule: #e8e8e6;
+  --rule-soft: #c9ccd1;
+  --rule-invert: #3a3f46;
+  --body: #2b2e34;
+  --body-muted: #43474e;
+  --meta: #5b6068;
+  --label: #6b6f76;
+  --label-2: #8b9098;
+  --label-3: #a3a8b0;
+  --footer-bg: #0b0c0e;
+  --footer-ink: #ffffff;
+  --footer-rule: #23262b;
+  --footer-link: #b9bec6;
+  --accent: #2f5fa8;
+  --accent-soft: #dbe6f5;
+  --header-bg: rgba(255, 255, 255, 0.88);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0c0e;
+  --surface: #121417;
+  --band: #121417;
+  --surface-hover: #1a1e23;
+  --ink: #eef0f2;
+  --ink-80: #e6e8ea;
+  --rule: #23262b;
+  --rule-soft: #454b54;
+  --rule-invert: #3a3f46;
+  --body: #c4c9cf;
+  --body-muted: #b0b6be;
+  --meta: #969ca4;
+  --label: #8f959d;
+  --label-2: #8b9098;
+  --label-3: #a3a8b0;
+  --footer-bg: #121417;
+  --footer-ink: #eef0f2;
+  --footer-rule: #23262b;
+  --footer-link: #b9bec6;
+  --accent: #8fb6f2;
+  --accent-soft: #26364d;
+  --header-bg: rgba(11, 12, 14, 0.86);
+}
+
 @theme {
-  --color-ink: #0b0c0e;
-  --color-ink-80: #1a1c20;
-  --color-body: #2b2e34;
-  --color-body-muted: #43474e;
-  --color-meta: #5b6068;
-  --color-label: #6b6f76;
-  --color-label-light: #8b9098;
-  --color-rule: #e8e8e6;
-  --color-rule-dark: #23262b;
-  --color-rule-dark-2: #3a3f46;
-  --color-surface: #fafafa;
-  --color-accent: #2f5fa8;
-  --color-accent-tint: #dbe6f5;
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-ink-80: var(--ink-80);
+  --color-body: var(--body);
+  --color-body-muted: var(--body-muted);
+  --color-meta: var(--meta);
+  --color-label: var(--label);
+  --color-label-light: var(--label-2);
+  --color-label-3: var(--label-3);
+  --color-rule: var(--rule);
+  --color-rule-soft: var(--rule-soft);
+  --color-rule-dark: var(--footer-rule);
+  --color-rule-dark-2: var(--rule-invert);
+  --color-surface: var(--surface);
+  --color-band: var(--band);
+  --color-surface-hover: var(--surface-hover);
+  --color-header: var(--header-bg);
+  --color-footer-bg: var(--footer-bg);
+  --color-footer-ink: var(--footer-ink);
+  --color-footer-rule: var(--footer-rule);
+  --color-footer-link: var(--footer-link);
+  --color-accent: var(--accent);
+  --color-accent-tint: var(--accent-soft);
 
   --font-sans: var(--font-manrope);
   --font-mono: var(--font-space-mono);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
 }
 
 ::selection {

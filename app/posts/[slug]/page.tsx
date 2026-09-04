@@ -61,7 +61,7 @@ export default async function PostPage({
           </Link>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="border-b border-[#c9ccd1] pb-[2px] text-[15px] font-semibold"
+            className="border-b border-rule-soft pb-[2px] text-[15px] font-semibold"
           >
             Discuss a project
           </a>

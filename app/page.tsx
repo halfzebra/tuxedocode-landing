@@ -30,13 +30,13 @@ function Hero() {
           <div className="flex items-center gap-5">
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="bg-ink px-[26px] py-[14px] text-[15px] font-semibold text-white hover:bg-accent"
+              className="bg-ink px-[26px] py-[14px] text-[15px] font-semibold text-bg hover:bg-accent"
             >
               Get In Touch
             </a>
             <Link
               href="/services"
-              className="border-b border-[#c9ccd1] pb-[2px] text-[15px] font-semibold"
+              className="border-b border-rule-soft pb-[2px] text-[15px] font-semibold"
             >
               Our Services
             </Link>
@@ -107,7 +107,7 @@ function FeaturedPost({
           <p className="mb-5 text-[17px] leading-[1.6] text-body-muted text-pretty">
             {excerpt}
           </p>
-          <span className="border-b border-[#c9ccd1] pb-[2px] text-[15px] font-semibold">
+          <span className="border-b border-rule-soft pb-[2px] text-[15px] font-semibold">
             Read the post
           </span>
         </div>

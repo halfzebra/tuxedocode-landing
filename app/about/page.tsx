@@ -62,7 +62,7 @@ export default function AboutPage() {
         {facts.map((fact) => (
           <div
             key={fact.label}
-            className="flex flex-col gap-[10px] bg-white p-[30px] pt-8 pb-9"
+            className="flex flex-col gap-[10px] bg-surface p-[30px] pt-8 pb-9"
           >
             <span className="font-mono text-[10px] tracking-[0.12em] text-label-light uppercase">
               {fact.label}

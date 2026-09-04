@@ -1,6 +1,7 @@
 import { COMPANY_NAME } from "@/lib/constants";
 import "./globals.css";
 import { Manrope, Space_Mono } from "next/font/google";
+import Script from "next/script";
 
 import Header from "./header";
 import Footer from "./footer";
@@ -31,8 +32,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${spaceMono.variable}`}>
+    <html
+      lang="en"
+      className={`${manrope.variable} ${spaceMono.variable}`}
+      suppressHydrationWarning
+    >
       <body>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("tc-theme");if(t==="dark"){document.documentElement.setAttribute("data-theme","dark")}}catch(e){}`,
+          }}
+        />
         <section className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>

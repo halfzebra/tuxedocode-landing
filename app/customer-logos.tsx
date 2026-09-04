@@ -15,7 +15,7 @@ export default function CustomerLogos({
   }
 
   return (
-    <section className="border-y border-rule bg-surface">
+    <section className="border-y border-rule bg-band">
       <div className="mx-auto max-w-[1180px] px-8 py-[52px]">
         <h2 className="mb-8 font-mono text-[11px] font-normal tracking-[0.16em] text-label uppercase">
           Companies I&apos;ve worked with
@@ -24,7 +24,7 @@ export default function CustomerLogos({
           {validCustomers.map((customer, index) => (
             <div
               key={index}
-              className="flex h-[88px] items-center justify-center bg-white p-4"
+              className="flex h-[88px] items-center justify-center bg-surface p-4"
             >
               <a
                 href={customer.website!}
