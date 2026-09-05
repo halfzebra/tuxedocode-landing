@@ -1,5 +1,6 @@
 "use client";
 
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const THEME_EVENT = "tc-theme-change";
@@ -54,9 +55,13 @@ export default function ThemeToggle({
       type="button"
       onClick={toggle}
       aria-label="Switch theme"
-      className={`flex shrink-0 items-center justify-center font-mono text-xs ${VARIANTS[variant]}`}
+      className={`flex shrink-0 items-center justify-center ${VARIANTS[variant]}`}
     >
-      {theme === "dark" ? "☾" : "☀"}
+      {theme === "dark" ? (
+        <Moon aria-hidden className="h-[18px] w-[18px]" />
+      ) : (
+        <Sun aria-hidden className="h-[18px] w-[18px]" />
+      )}
     </button>
   );
 }
