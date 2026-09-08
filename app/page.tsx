@@ -7,7 +7,6 @@ import MoreStories from "./more-stories";
 import CustomerLogos from "./customer-logos";
 
 import { getAllPosts, getAllCustomers } from "@/lib/api";
-import { CONTACT_EMAIL } from "@/lib/constants";
 import { getPostCategory } from "@/lib/post-categories";
 
 import { Post } from "@/lib/generated/contentful-types";
@@ -28,12 +27,12 @@ function Hero() {
             businesses.
           </p>
           <div className="flex items-center gap-5">
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
+            <Link
+              href="/contact"
               className="bg-ink px-[26px] py-[14px] text-[15px] font-semibold text-bg hover:bg-accent"
             >
               Get In Touch
-            </a>
+            </Link>
             <Link
               href="/services"
               className="border-b border-rule-soft pb-[2px] text-[15px] font-semibold"

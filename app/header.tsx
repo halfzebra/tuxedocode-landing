@@ -7,13 +7,13 @@ import { usePathname } from "next/navigation";
 import Monogram from "./monogram";
 import ThemeToggle from "./theme-toggle";
 import MobileNav from "./mobile-nav";
-import { CONTACT_EMAIL } from "@/lib/constants";
 
 const NAV = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About Me" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {
@@ -51,12 +51,12 @@ export default function Header() {
                 </Link>
               ))}
             </div>
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
+            <Link
+              href="/contact"
               className="hidden bg-ink px-4 py-2 font-semibold text-bg hover:bg-accent md:inline-block"
             >
               Contact
-            </a>
+            </Link>
             <div className="hidden md:block">
               <ThemeToggle />
             </div>

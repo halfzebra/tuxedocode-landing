@@ -9,6 +9,7 @@ const NAV = [
   { num: "02", href: "/services", label: "Services" },
   { num: "03", href: "/blog", label: "Blog" },
   { num: "04", href: "/about", label: "About Me" },
+  { num: "05", href: "/contact", label: "Contact" },
 ];
 
 export default function MobileNav({
@@ -56,12 +57,13 @@ export default function MobileNav({
         ))}
       </nav>
       <div className="flex flex-col gap-[18px] px-5 pt-6 pb-8">
-        <a
-          href={`mailto:${CONTACT_EMAIL}`}
+        <Link
+          href="/contact"
+          onClick={onClose}
           className="bg-footer-ink px-6 py-4 text-center text-base font-bold text-footer-bg"
         >
           Contact
-        </a>
+        </Link>
         <p className="font-mono text-[10px] tracking-[0.08em] text-label">
           {CONTACT_EMAIL.toUpperCase()} · CVR {CVR} · {COMPANY_NAME}
         </p>

@@ -42,7 +42,7 @@ export default function RootLayout({
           id="theme-init"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("tc-theme");if(t==="light"){document.documentElement.setAttribute("data-theme","light")}}catch(e){}`,
+            __html: `(function initTheme(){try{var stored=localStorage.getItem("tc-theme");if(stored==="light"){document.documentElement.setAttribute("data-theme","light");return}if(stored==="dark"){return}if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches){document.documentElement.setAttribute("data-theme","light")}}catch(e){}})();`,
           }}
         />
         <section className="flex min-h-screen flex-col">

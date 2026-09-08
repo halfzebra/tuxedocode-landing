@@ -1,5 +1,6 @@
-import { COMPANY_NAME, CONTACT_EMAIL } from "@/lib/constants";
+import { COMPANY_NAME } from "@/lib/constants";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata = {
   title: `Services - ${COMPANY_NAME}`,
@@ -91,12 +92,12 @@ export default function ServicesPage() {
             You work directly with the person writing the code. No account
             layer, no handover between teams.
           </p>
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
+          <Link
+            href="/contact"
             className="self-start bg-ink px-6 py-[13px] text-[15px] font-semibold text-bg hover:bg-accent"
           >
             Get In Touch
-          </a>
+          </Link>
         </div>
       </section>
     </div>
