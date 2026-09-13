@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { type Customer } from "@/lib/generated/contentful-types";
+import { type Customer } from "@/lib/api";
 
 export default function CustomerLogos({
   customers,
@@ -7,7 +7,7 @@ export default function CustomerLogos({
   customers: Customer[];
 }) {
   const validCustomers = customers.filter(
-    (customer) => customer.name && customer.website && customer.logo?.url
+    (customer) => customer.name && customer.website && customer.logo
   );
 
   if (validCustomers.length === 0) {
@@ -21,28 +21,24 @@ export default function CustomerLogos({
           Companies I&apos;ve worked with
         </h2>
         <div className="grid grid-cols-2 gap-px border border-rule bg-rule sm:grid-cols-3 md:grid-cols-5">
-          {validCustomers.map((customer, index) => (
+          {validCustomers.map((customer) => (
             <div
-              key={index}
+              key={customer.slug}
               className="flex h-[88px] items-center justify-center bg-white p-4"
             >
               <a
                 href={customer.website!}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-opacity hover:opacity-70"
-                title={customer.name!}
+                title={customer.name}
+                className="relative h-[48px] w-full transition-opacity hover:opacity-70"
               >
                 <Image
-                  src={customer.logo!.url!}
-                  alt={
-                    customer.logo!.description ||
-                    customer.logo!.title ||
-                    customer.name!
-                  }
-                  width={Math.min(customer.logo!.width || 160, 160)}
-                  height={Math.min(customer.logo!.height || 48, 48)}
-                  className="h-auto max-h-[48px] max-w-full object-contain"
+                  src={customer.logo!}
+                  alt={customer.name}
+                  fill
+                  sizes="160px"
+                  className="object-contain"
                 />
               </a>
             </div>

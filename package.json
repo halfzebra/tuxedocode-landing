@@ -2,23 +2,19 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "prebuild": "graphql-codegen",
+    "prebuild": "node ./scripts/strip-keystatic-for-vercel.js",
     "build": "next build",
-    "start": "next start",
-    "setup": "node ./lib/setup.js",
-    "codegen": "graphql-codegen",
-    "codegen:watch": "graphql-codegen --watch"
+    "start": "next start"
   },
   "dependencies": {
-    "@contentful/rich-text-react-renderer": "16.2.2",
-    "@contentful/rich-text-types": "17.2.7",
+    "@keystatic/core": "^0.6.9",
+    "@keystatic/next": "^5.0.5",
     "@tailwindcss/postcss": "4.3.3",
     "@tailwindcss/typography": "0.5.20",
     "@types/node": "26.4.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "botid": "^1.5.11",
-    "contentful-import": "10.2.2",
     "date-fns": "4.4.0",
     "lucide-react": "^1.41.0",
     "next": "16.3.3",
@@ -31,13 +27,7 @@
     "typescript": "7.0.2"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "7.3.1",
-    "@graphql-codegen/typescript": "6.1.0",
-    "@graphql-codegen/typescript-graphql-request": "7.1.0",
-    "@graphql-codegen/typescript-operations": "6.1.6",
     "@types/nodemailer": "^8.0.1",
-    "graphql": "17.0.2",
-    "graphql-request": "7.4.0",
     "prettier": "3.9.6"
   }
 }

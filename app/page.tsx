@@ -1,15 +1,12 @@
 import Link from "next/link";
-import { draftMode } from "next/headers";
 
 import Date from "./date";
 import Image from "next/image";
 import MoreStories from "./more-stories";
 import CustomerLogos from "./customer-logos";
 
-import { getAllPosts, getAllCustomers } from "@/lib/api";
+import { getAllPosts, getAllCustomers, type Post } from "@/lib/api";
 import { getPostCategory } from "@/lib/post-categories";
-
-import { Post } from "@/lib/generated/contentful-types";
 
 function Hero() {
   return (
@@ -85,14 +82,14 @@ function FeaturedPost({
         href={`/posts/${slug}`}
         className="grid grid-cols-1 items-center gap-8 border-t border-ink pt-7 md:grid-cols-[1.15fr_1fr] md:gap-11"
       >
-        {coverImage?.url && (
+        {coverImage && (
           <div className="relative h-[220px] w-full md:h-[340px]">
             <Image
               alt={title ? `Cover image for ${title}` : "Cover image"}
               fill
               sizes="(min-width: 1180px) 641px, 100vw"
               className="object-cover object-[50%_78%]"
-              src={coverImage.url}
+              src={coverImage}
             />
           </div>
         )}
@@ -116,9 +113,8 @@ function FeaturedPost({
 }
 
 export default async function Page() {
-  const { isEnabled } = await draftMode();
-  const allPosts = await getAllPosts(isEnabled);
-  const allCustomers = await getAllCustomers(isEnabled);
+  const allPosts = await getAllPosts();
+  const allCustomers = await getAllCustomers();
   const heroPost = allPosts[0];
   const morePosts = allPosts.slice(1);
 
@@ -141,6 +137,3 @@ export default async function Page() {
     </div>
   );
 }
-
-// Enable ISR: Regenerate this page at most once every hour (3600 seconds)
-export const revalidate = 3600;

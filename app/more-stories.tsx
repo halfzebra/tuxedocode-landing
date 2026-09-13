@@ -1,6 +1,6 @@
 import Link from "next/link";
 import DateComponent from "./date";
-import { type Post } from "@/lib/generated/contentful-types";
+import { type Post } from "@/lib/api";
 import { getPostCategory } from "@/lib/post-categories";
 
 function PostPreview({

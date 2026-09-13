@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { draftMode } from "next/headers";
 
 import CoverImage from "../../cover-image";
 import Date from "../../date";
@@ -13,7 +12,7 @@ import { getPostCategory } from "@/lib/post-categories";
 import { getReadingTime } from "@/lib/reading-time";
 
 export async function generateStaticParams() {
-  const allPosts = await getAllPosts(false);
+  const allPosts = await getAllPosts();
 
   return allPosts.map((post) => ({
     slug: post.slug,
@@ -26,8 +25,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { isEnabled } = await draftMode();
-  const post = await getPostBySlug(slug, isEnabled);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -36,7 +34,7 @@ export default async function PostPage({
   return (
     <article>
       <div className="mx-auto max-w-[1180px] px-8 pt-14">
-        <CoverImage title={post.title} url={post.coverImage?.url} />
+        <CoverImage title={post.title} url={post.coverImage} />
       </div>
       <div className="mx-auto max-w-[720px] px-8 pt-14 pb-24">
         <p className="mb-5 font-mono text-[11px] tracking-[0.12em] text-label uppercase">
@@ -46,7 +44,7 @@ export default async function PostPage({
           {post.title}
         </h1>
         <Byline
-          authorName={post.author?.name}
+          authorName={post.author}
           readingTimeMinutes={getReadingTime(post.content)}
         />
 
@@ -70,6 +68,3 @@ export default async function PostPage({
     </article>
   );
 }
-
-// Enable ISR: Regenerate individual posts at most once every hour (3600 seconds)
-export const revalidate = 3600;

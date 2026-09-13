@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { draftMode } from "next/headers";
 
 import Date from "../date";
 import { getAllPosts } from "@/lib/api";
@@ -12,8 +11,7 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const { isEnabled } = await draftMode();
-  const allPosts = await getAllPosts(isEnabled);
+  const allPosts = await getAllPosts();
 
   return (
     <div className="mx-auto max-w-[900px] px-8 pt-16 pb-24 md:pt-20">
@@ -48,6 +46,3 @@ export default async function BlogPage() {
     </div>
   );
 }
-
-// Enable ISR: Regenerate this page at most once every hour (3600 seconds)
-export const revalidate = 3600;

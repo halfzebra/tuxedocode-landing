@@ -1,0 +1,64 @@
+{
+  "data": {
+    "customerCollection": {
+      "items": [
+        {
+          "name": "Samsung Electronics",
+          "website": "https://www.samsung.com/",
+          "logo": {
+            "fileName": "Samsung_Logo.svg"
+          }
+        },
+        {
+          "name": "Trustpilot",
+          "website": "https://dk.trustpilot.com/",
+          "logo": {
+            "fileName": "Trustpilot_Logo_(2022).svg"
+          }
+        },
+        {
+          "name": "Dinero",
+          "website": "https://dinero.dk/",
+          "logo": {
+            "fileName": "dinero-logo.svg"
+          }
+        },
+        {
+          "name": "Aller Media",
+          "website": "https://aller.dk/",
+          "logo": {
+            "fileName": "AllerMedia_A_Logo_udenNavn_Black_RGB.svg"
+          }
+        },
+        {
+          "name": "DanskeBank",
+          "website": "https://danskebank.dk",
+          "logo": {
+            "fileName": "Danske Bank.svg"
+          }
+        },
+        {
+          "name": "TV 2 Danmark ",
+          "website": "https://tv2.dk/",
+          "logo": {
+            "fileName": "TV_2_logo_2013.svg"
+          }
+        },
+        {
+          "name": "Styrelsen for Arbejdsmarked og Rekruttering",
+          "website": "https://star.dk/",
+          "logo": {
+            "fileName": "star_logo_web.png"
+          }
+        },
+        {
+          "name": "Udviklings- og Forenklingsstyrelsen",
+          "website": "https://ufst.dk/",
+          "logo": {
+            "fileName": "Udviklings-_og_Forenklingsstyrelsen_Logo.svg"
+          }
+        }
+      ]
+    }
+  }
+}

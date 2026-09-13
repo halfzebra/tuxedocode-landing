@@ -1,142 +1,38 @@
-import { Post, Customer } from "./generated/contentful-types";
-import { contentfulClient, contentfulPreviewClient } from "./contentful-client";
+import { createReader } from "@keystatic/core/reader";
 
-// Re-export types
-export type { Post, Customer };
+import keystaticConfig from "@/keystatic.config";
 
-// Helper function to execute GraphQL queries
-async function executeQuery(client: any, query: string) {
-  return client.request(query);
+const reader = createReader(process.cwd(), keystaticConfig);
+
+export async function getAllPosts() {
+  const posts = await reader.collections.posts.all({
+    resolveLinkedFiles: true,
+  });
+
+  return posts
+    .map(({ slug, entry }) => ({ ...entry, slug }))
+    .sort((a, b) => {
+      const dateA = a.date ?? "";
+      const dateB = b.date ?? "";
+      return dateA < dateB ? 1 : dateA > dateB ? -1 : 0;
+    });
 }
 
-/**
- * Get all posts - type-safe and simple
- */
-export async function getAllPosts(isDraftMode = false): Promise<Post[]> {
-  const client = isDraftMode ? contentfulPreviewClient : contentfulClient;
-
-  const query = `
-    query {
-      postCollection(where: { slug_exists: true }, order: date_DESC, preview: ${isDraftMode}) {
-        items {
-          slug
-          title
-          coverImage {
-            url
-          }
-          date
-          author {
-            name
-          }
-          excerpt
-          content {
-            json
-            links {
-              assets {
-                block {
-                  sys {
-                    id
-                  }
-                  url
-                  description
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  const response = await executeQuery(client, query);
-  return response.postCollection?.items || [];
+export async function getPostBySlug(slug: string) {
+  const entry = await reader.collections.posts.read(slug, {
+    resolveLinkedFiles: true,
+  });
+  if (!entry) return null;
+  return { ...entry, slug };
 }
 
-/**
- * Get single post by slug - type-safe
- */
-export async function getPostBySlug(
-  slug: string,
-  preview = false
-): Promise<Post | null> {
-  const client = preview ? contentfulPreviewClient : contentfulClient;
+export async function getAllCustomers() {
+  const customers = await reader.collections.customers.all();
 
-  const query = `
-    query {
-      postCollection(where: { slug: "${slug}" }, preview: ${preview}, limit: 1) {
-        items {
-          slug
-          title
-          coverImage {
-            url
-          }
-          date
-          author {
-            name
-          }
-          excerpt
-          content {
-            json
-            links {
-              assets {
-                block {
-                  sys {
-                    id
-                  }
-                  url
-                  description
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  const response = await executeQuery(client, query);
-  return response.postCollection?.items[0] || null;
+  return customers
+    .map(({ slug, entry }) => ({ ...entry, slug }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/**
- * Get all customers - type-safe
- */
-export async function getAllCustomers(
-  isDraftMode = false
-): Promise<Customer[]> {
-  const client = isDraftMode ? contentfulPreviewClient : contentfulClient;
-
-  const query = `
-    query {
-      customerCollection(order: name_ASC, preview: ${isDraftMode}) {
-        items {
-          name
-          website
-          logo {
-            title
-            description
-            contentType
-            fileName
-            size
-            url
-            width
-            height
-          }
-        }
-      }
-    }
-  `;
-
-  const response = await executeQuery(client, query);
-  return response.customerCollection?.items || [];
-}
-
-/**
- * Preview mode helper
- */
-export async function getPreviewPostBySlug(
-  slug: string | null
-): Promise<Post | null> {
-  if (!slug) return null;
-  return getPostBySlug(slug, true);
-}
+export type Post = NonNullable<Awaited<ReturnType<typeof getPostBySlug>>>;
+export type Customer = Awaited<ReturnType<typeof getAllCustomers>>[number];

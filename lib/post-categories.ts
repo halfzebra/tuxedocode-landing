@@ -1,7 +1,7 @@
 /**
- * Contentful's Post content type has no category field (see
- * lib/generated/contentful-types.ts) — that's intentional, not a gap.
- * Add an entry here by hand whenever a new post is published in Contentful.
+ * The Post content model has no category field — that's intentional, not a
+ * gap. Categories are hand-maintained here instead of in the CMS schema.
+ * Add an entry here by hand whenever a new post is published via Keystatic.
  */
 const POST_CATEGORIES: Record<string, string> = {};
 
