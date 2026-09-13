@@ -25,7 +25,8 @@ Funciton to book a call with me using calendar
 
 ### Drop Contentful
 
-- Already underway in the working tree (uncommitted): Contentful client/codegen/import script and the draft/revalidate API routes are deleted, `@keystatic/core` + `app/keystatic/` have been added instead. Remaining: finish wiring `lib/api.ts` to Keystatic, migrate existing Contentful content (posts, customers, images) over, and update `AGENTS.md` once the swap is committed — it still documents Contentful as current.
+- Done: Contentful client/codegen/import script and the draft/revalidate API routes are deleted, `@keystatic/core` + `app/keystatic/` are in, `lib/api.ts` is fully wired to Keystatic's Reader API, and `AGENTS.md` documents the current (Keystatic) architecture.
+- Remaining: `content/customers/` has no YAML entries yet even though the 9 customer logo assets are already migrated under `public/images/customers/` — the homepage customer-logo band silently renders nothing until these are backfilled (see `clients/mapping.json` for the source name/website/logo data).
 
 ### WCAG
 

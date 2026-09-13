@@ -1,5 +1,9 @@
 {
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "packageManager": "pnpm@10.13.1",
   "scripts": {
     "dev": "next",
     "prebuild": "node ./scripts/strip-keystatic-for-vercel.js",
