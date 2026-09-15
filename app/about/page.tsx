@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { COMPANY_NAME } from "@/lib/constants";
+import { COMPANY_NAME, EXPERIENCE_YEARS } from "@/lib/constants";
 
 export const metadata = {
   title: `About - ${COMPANY_NAME}`,
@@ -9,7 +9,7 @@ export const metadata = {
 
 const facts = [
   { label: "Based in", value: "Nordhavn, Copenhagen" },
-  { label: "Experience", value: "13+ years in software" },
+  { label: "Experience", value: `${EXPERIENCE_YEARS}+ years in software` },
   { label: "Sectors", value: "Fintech, pharma, public sector" },
 ];
 
@@ -30,16 +30,16 @@ export default function AboutPage() {
             architecture conversation to the code in production.
           </p>
           <p className="mb-5 max-w-[62ch] text-[17px] leading-[1.75] text-body text-pretty">
-            Over 13+ years I have shipped large-scale systems, complex user
-            interfaces, and production LLM pipelines for fintech, pharma, and
-            public-sector clients. Most of that work sits in environments
-            where a feature is not finished until it can be reviewed, logged,
-            and explained months later.
+            Over {EXPERIENCE_YEARS}+ years I have shipped large-scale systems,
+            complex user interfaces, and production LLM pipelines for fintech,
+            pharma, and public-sector clients. Most of that work sits in
+            environments where a feature is not finished until it can be
+            reviewed, logged, and explained months later.
           </p>
           <p className="max-w-[62ch] text-[17px] leading-[1.75] text-body text-pretty">
-            I take on a small number of engagements at a time, which keeps
-            the accountability clear: no account layer, no handover between
-            teams, and the same person on the call and in the repository.
+            I take on a small number of engagements at a time, which keeps the
+            accountability clear: no account layer, no handover between teams,
+            and the same person on the call and in the repository.
           </p>
         </div>
         <div>

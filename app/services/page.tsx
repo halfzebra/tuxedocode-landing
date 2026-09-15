@@ -1,4 +1,4 @@
-import { COMPANY_NAME } from "@/lib/constants";
+import { COMPANY_NAME, EXPERIENCE_YEARS } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -49,9 +49,9 @@ export default function ServicesPage() {
           Services
         </h1>
         <p className="mb-14 max-w-[62ch] text-lg leading-[1.55] text-body-muted text-pretty">
-          13+ years shipping large-scale systems, complex UIs, and production
-          LLM pipelines for fintech, pharma, and public-sector clients —
-          available for freelance and consulting engagements.
+          {EXPERIENCE_YEARS}+ years shipping large-scale systems, complex UIs,
+          and production LLM pipelines for fintech, pharma, and public-sector
+          clients — available for freelance and consulting engagements.
         </p>
       </section>
 
