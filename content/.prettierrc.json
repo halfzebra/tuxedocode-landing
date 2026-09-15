@@ -1,3 +1,9 @@
 {
-  "proseWrap": "preserve"
+  "proseWrap": "preserve",
+  "overrides": [
+    {
+      "files": "*.mdoc",
+      "options": { "parser": "markdown" }
+    }
+  ]
 }
