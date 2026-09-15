@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.mdoc": "markdown"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
