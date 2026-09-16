@@ -4,6 +4,14 @@
 // bg-logo-bg/text-logo-fg tokens Monogram depends on — currentColor is used
 // instead, matching how Keystatic's own default mark (ZapLogo) picks up the
 // surrounding nav text color for both color schemes.
+//
+// This file must live outside app/keystatic/ and app/api/keystatic/:
+// keystatic.config.ts is imported by lib/api.ts (used on every page, not
+// just the admin UI), so it ships in every production build. Those two
+// directories get deleted by scripts/strip-keystatic-for-vercel.js before
+// `next build` runs on Vercel — if this lived inside either one, that
+// script would delete it while keystatic.config.ts still imported it,
+// breaking every production build with a "Module not found" error.
 export default function KeystaticBrandMark() {
   return (
     <svg

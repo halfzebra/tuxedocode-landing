@@ -1,6 +1,6 @@
 import { config, collection, fields } from "@keystatic/core";
 
-import KeystaticBrandMark from "@/app/keystatic/brand-mark";
+import KeystaticBrandMark from "@/keystatic-brand-mark";
 
 // The admin UI (and its write-capable API route) is a local-editing-only
 // workflow: edit here, commit, push, let Vercel rebuild. Vercel's production
