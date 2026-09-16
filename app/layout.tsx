@@ -3,9 +3,6 @@ import "./globals.css";
 import { Manrope, Space_Mono } from "next/font/google";
 import Script from "next/script";
 
-import Header from "./header";
-import Footer from "./footer";
-
 export const metadata = {
   title: `${COMPANY_NAME} - Premium Software Development`,
   description:
@@ -45,11 +42,7 @@ export default function RootLayout({
             __html: `(function initTheme(){try{var stored=localStorage.getItem("tc-theme");if(stored==="light"){document.documentElement.setAttribute("data-theme","light");return}if(stored==="dark"){return}if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches){document.documentElement.setAttribute("data-theme","light")}}catch(e){}})();`,
           }}
         />
-        <section className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </section>
+        {children}
       </body>
     </html>
   );

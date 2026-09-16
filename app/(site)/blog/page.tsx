@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import Date from "../date";
+import Date from "../../date";
 import { getAllPosts } from "@/lib/api";
 import { COMPANY_NAME } from "@/lib/constants";
 

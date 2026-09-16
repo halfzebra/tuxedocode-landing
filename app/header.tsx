@@ -7,14 +7,7 @@ import { usePathname } from "next/navigation";
 import Monogram from "./monogram";
 import ThemeToggle from "./theme-toggle";
 import MobileNav from "./mobile-nav";
-
-const NAV = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/blog", label: "Blog" },
-  { href: "/about", label: "About Me" },
-  { href: "/contact", label: "Contact" },
-];
+import { NAV_ITEMS } from "./nav-items";
 
 export default function Header() {
   const pathname = usePathname();
@@ -36,7 +29,7 @@ export default function Header() {
           </Link>
           <nav className="flex items-center gap-4 text-sm font-medium md:gap-[34px]">
             <div className="hidden items-center gap-[34px] md:flex">
-              {NAV.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

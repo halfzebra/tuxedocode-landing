@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import CoverImage from "../../cover-image";
-import Date from "../../date";
-import Byline from "../../byline";
+import CoverImage from "../../../cover-image";
+import Date from "../../../date";
+import Byline from "../../../byline";
 
 import { Markdown } from "@/lib/markdown";
 import { getAllPosts, getPostBySlug } from "@/lib/api";

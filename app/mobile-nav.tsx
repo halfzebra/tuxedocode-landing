@@ -3,14 +3,7 @@ import Link from "next/link";
 import Monogram from "./monogram";
 import ThemeToggle from "./theme-toggle";
 import { COMPANY_NAME, CVR, CONTACT_EMAIL } from "@/lib/constants";
-
-const NAV = [
-  { num: "01", href: "/", label: "Home" },
-  { num: "02", href: "/services", label: "Services" },
-  { num: "03", href: "/blog", label: "Blog" },
-  { num: "04", href: "/about", label: "About Me" },
-  { num: "05", href: "/contact", label: "Contact" },
-];
+import { NAV_ITEMS, navNumber } from "./nav-items";
 
 export default function MobileNav({
   onClose,
@@ -42,7 +35,7 @@ export default function MobileNav({
         </div>
       </div>
       <nav className="flex flex-1 flex-col px-5 pt-2">
-        {NAV.map((item) => (
+        {NAV_ITEMS.map((item, index) => (
           <Link
             key={item.href}
             href={item.href}
@@ -50,7 +43,7 @@ export default function MobileNav({
             className="flex items-baseline gap-[14px] border-b border-footer-rule py-[22px] text-[32px] leading-none font-extrabold tracking-[-0.035em] text-footer-ink hover:text-accent-tint"
           >
             <span className="font-mono text-[10px] font-normal tracking-[0.12em] text-label">
-              {item.num}
+              {navNumber(index)}
             </span>
             {item.label}
           </Link>

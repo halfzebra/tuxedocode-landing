@@ -1,5 +1,5 @@
 import { COMPANY_NAME, CVR, CONTACT_EMAIL } from "@/lib/constants";
-import ContactForm from "../contact-form";
+import ContactForm from "../../contact-form";
 
 export const metadata = {
   title: `Contact - ${COMPANY_NAME}`,

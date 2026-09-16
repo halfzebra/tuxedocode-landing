@@ -1,5 +1,7 @@
 import { config, collection, fields } from "@keystatic/core";
 
+import KeystaticBrandMark from "@/app/keystatic/brand-mark";
+
 // The admin UI (and its write-capable API route) is a local-editing-only
 // workflow: edit here, commit, push, let Vercel rebuild. Vercel's production
 // filesystem is read-only anyway, so this also guards against a dead UI that
@@ -20,6 +22,16 @@ export const showAdminUI = process.env.NODE_ENV === "development";
 
 export default config({
   storage: { kind: "local" },
+
+  // Matches the site's own header wordmark (app/header.tsx) rather than the
+  // legal COMPANY_NAME constant ("Tuxedo Code ApS"), which is too long for
+  // the nav sidebar and is only used for display/footer/metadata contexts.
+  ui: {
+    brand: {
+      name: "Tuxedo Code",
+      mark: KeystaticBrandMark,
+    },
+  },
 
   collections: {
     posts: collection({

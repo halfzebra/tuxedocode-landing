@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import Date from "./date";
+import Date from "../date";
 import Image from "next/image";
-import MoreStories from "./more-stories";
-import CustomerLogos from "./customer-logos";
+import MoreStories from "../more-stories";
+import CustomerLogos from "../customer-logos";
 
 import { getAllPosts, getAllCustomers, type Post } from "@/lib/api";
 import { getPostCategory } from "@/lib/post-categories";
