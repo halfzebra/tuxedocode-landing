@@ -7,7 +7,6 @@ import Byline from "../../../byline";
 
 import { Markdown } from "@/lib/markdown";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
-import { CONTACT_EMAIL } from "@/lib/constants";
 import { getPostCategory } from "@/lib/post-categories";
 import { getReadingTime } from "@/lib/reading-time";
 
@@ -57,12 +56,12 @@ export default async function PostPage({
           >
             ← All posts
           </Link>
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
+          <Link
+            href="/contact"
             className="border-b border-rule-soft pb-[2px] text-[15px] font-semibold"
           >
             Discuss a project
-          </a>
+          </Link>
         </div>
       </div>
     </article>
