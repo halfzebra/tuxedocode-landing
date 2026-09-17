@@ -1,16 +1,9 @@
-import Header from "../header";
-import Footer from "../footer";
+import SiteChrome from "../site-chrome";
 
 export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <section className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </section>
-  );
+  return <SiteChrome>{children}</SiteChrome>;
 }
