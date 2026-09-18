@@ -1,12 +1,31 @@
-import { COMPANY_NAME } from "@/lib/constants";
+import type { Metadata } from "next";
+
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
 import "./globals.css";
 import { Manrope, Space_Mono } from "next/font/google";
 import Script from "next/script";
 
-export const metadata = {
-  title: `${COMPANY_NAME} - Premium Software Development`,
-  description:
-    "Professional software development and consulting services. We build modern, scalable applications for businesses.",
+const description =
+  "Professional software development and consulting services. We build modern, scalable applications for businesses.";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${COMPANY_NAME} - Premium Software Development`,
+    template: "%s | Tuxedo Code",
+  },
+  description,
+  openGraph: {
+    type: "website",
+    siteName: "Tuxedo Code",
+    url: SITE_URL,
+    locale: "en_US",
+    title: `${COMPANY_NAME} - Premium Software Development`,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 const manrope = Manrope({

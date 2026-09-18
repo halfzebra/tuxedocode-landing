@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import Date from "../date";
@@ -7,6 +8,23 @@ import CustomerLogos from "../customer-logos";
 
 import { getAllPosts, getAllCustomers, type Post } from "@/lib/api";
 import { getPostCategory } from "@/lib/post-categories";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+
+const title = `${COMPANY_NAME} - Premium Software Development`;
+const description =
+  "Premium software development and consulting services for modern businesses.";
+
+export const metadata: Metadata = {
+  description,
+  alternates: { canonical: SITE_URL },
+  openGraph: {
+    type: "website",
+    siteName: "Tuxedo Code",
+    title,
+    description,
+    url: SITE_URL,
+  },
+};
 
 function Hero() {
   return (

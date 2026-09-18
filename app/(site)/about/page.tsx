@@ -1,10 +1,22 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import { COMPANY_NAME, EXPERIENCE_YEARS } from "@/lib/constants";
+import { COMPANY_NAME, EXPERIENCE_YEARS, SITE_URL } from "@/lib/constants";
 
-export const metadata = {
-  title: `About - ${COMPANY_NAME}`,
-  description:
-    "Eduard Kyvenko runs Tuxedo Code ApS as a one-person software consulting practice from Nordhavn, Copenhagen.",
+const title = `About - ${COMPANY_NAME}`;
+const description =
+  "Eduard Kyvenko runs Tuxedo Code ApS as a one-person software consulting practice from Nordhavn, Copenhagen.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: `${SITE_URL}/about` },
+  openGraph: {
+    type: "website",
+    siteName: "Tuxedo Code",
+    title,
+    description,
+    url: `${SITE_URL}/about`,
+  },
 };
 
 const facts = [

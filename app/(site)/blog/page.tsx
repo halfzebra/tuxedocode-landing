@@ -1,13 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import Date from "../../date";
 import { getAllPosts } from "@/lib/api";
-import { COMPANY_NAME } from "@/lib/constants";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
 
-export const metadata = {
-  title: `Blog - ${COMPANY_NAME}`,
-  description:
-    "Notes on architecture, delivery, and the practical side of shipping software in regulated industries.",
+const title = `Blog - ${COMPANY_NAME}`;
+const description =
+  "Notes on architecture, delivery, and the practical side of shipping software in regulated industries.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: `${SITE_URL}/blog` },
+  openGraph: {
+    type: "website",
+    siteName: "Tuxedo Code",
+    title,
+    description,
+    url: `${SITE_URL}/blog`,
+  },
 };
 
 export default async function BlogPage() {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -9,6 +10,7 @@ import { Markdown } from "@/lib/markdown";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
 import { getPostCategory } from "@/lib/post-categories";
 import { getReadingTime } from "@/lib/reading-time";
+import { SITE_URL } from "@/lib/constants";
 
 export async function generateStaticParams() {
   const allPosts = await getAllPosts();
@@ -16,6 +18,36 @@ export async function generateStaticParams() {
   return allPosts.map((post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+
+  if (!post) {
+    return {};
+  }
+
+  const url = `${SITE_URL}/posts/${post.slug}`;
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      siteName: "Tuxedo Code",
+      title: post.title,
+      description: post.excerpt,
+      url,
+      publishedTime: post.date ?? undefined,
+      images: post.coverImage ? [post.coverImage] : undefined,
+    },
+  };
 }
 
 export default async function PostPage({

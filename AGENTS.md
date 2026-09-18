@@ -26,6 +26,7 @@ Project uses `mise`
 - **The CMS is deliberately never deployed to Vercel, via two independent layers** (both must be preserved if this code is touched):
   1. **Runtime gate**: `app/keystatic/layout.tsx` and `app/api/keystatic/[...params]/route.ts` both check `showAdminUI` (exported from `keystatic.config.ts`, `true` only when `NODE_ENV === "development"`) and call Next's `notFound()`/return a plain 404 when it's false. This alone would still leave the admin UI's JS compiled into the Vercel build output (just unreachable), since `layout.tsx`'s static `import KeystaticApp from "./keystatic"` gets bundled regardless of the runtime branch.
   2. **Build-time exclusion**: `scripts/strip-keystatic-for-vercel.js`, wired as the `prebuild` npm script, deletes `app/keystatic/` and `app/api/keystatic/` outright before `next build` runs — but only when `process.env.VERCEL` is set (Vercel sets this automatically for every build it runs, production or preview, nothing to configure). This is a no-op for local `pnpm build`/`pnpm dev`. Because Vercel always builds from a fresh git checkout rather than mutating the real repo, this script deleting local files during a Vercel build is safe and has no effect on the actual repository. This is the layer that makes "never deployed" literally true, not just "unreachable once deployed."
+- **`app/robots.ts` also lists `/keystatic` and `/api/keystatic` under `disallow`, but this is defense-in-depth/documentation, not the real security boundary** — a robots rule only asks well-behaved crawlers not to index a path; it doesn't stop anyone from requesting it directly. On Vercel these paths don't exist at all (deleted pre-build by layer 2 above), so there's nothing for the rule to actually protect; it mainly guards against a stale indexed URL and acts as a written trip-wire — if the two layers above are ever weakened, this rule is a visible reminder that these paths were meant to stay unreachable. Don't treat adding/keeping this `disallow` rule as a substitute for the runtime gate or the build-time strip script.
 
 ### Environment Setup
 
@@ -53,6 +54,12 @@ SMTP_PORT=
 - **Post** (`content/posts/<slug>/index.mdoc`): `slug`, `title`, `coverImage` (image path), `date`, `author` (plain text — Contentful's linked `Author` type only ever had `.name` queried here, so this is a faithful flattening, not a new modeling decision), `excerpt`, `content` (Keystatic `document` field). **No `category` field** — blog category tags shown in the UI come from a hand-maintained `slug → category` lookup in `lib/post-categories.ts`, updated manually per post. Reading time is computed from the document's resolved node tree (`lib/reading-time.ts`), not stored in the schema.
 - **Customer** (`content/customers/<slug>.yaml`): `slug`, `name`, `website`, `logo` (image path). There's no more separate `Author` content type — author is just a text field on `Post` now (see above), and its old `picture` field (already unused in the UI — see Design System below) has no equivalent.
 
+### SEO
+
+- `lib/constants.ts`'s `SITE_URL` (`https://tuxedocode.dk`) is the single source of truth for absolute URLs — used as `metadataBase` in `app/layout.tsx`, and to build every `canonical`/`openGraph.url`/sitemap entry. Don't hardcode the domain elsewhere.
+- `app/sitemap.ts` and `app/robots.ts` (Next's `MetadataRoute.Sitemap`/`MetadataRoute.Robots` file conventions) are generated at request time from `getAllPosts()` plus a fixed list of static routes — no stored sitemap data, nothing to keep in sync by hand beyond adding a route to the static list if a new top-level page is added.
+- Every route under `(site)/` sets its own `metadata`/`generateMetadata` (title, description, `alternates.canonical`, `openGraph`). **`openGraph` is not deep-merged with the root layout's** — Next replaces the whole object when a page defines one, so each page's `openGraph` re-declares `type`/`siteName` alongside its own `title`/`description`/`url` rather than relying on inheritance from `app/layout.tsx`.
+
 ### Keystatic implementation gotchas (learned the hard way — verify against live behavior, not just types, before changing any of this)
 
 - **The `{ slug, entry }` spread order in `lib/api.ts` matters and is not obvious from the types.** `reader.collections.X.all()`/`.read()` returns an `entry` object that *itself* contains a `slug` key (because the schema field is literally named `slug`), and at runtime that inner value is the raw stored "name" text (e.g. `"Hello World"`), not the URL-safe slug (`"hello-world"`) — despite what the Reader API's TypeScript types suggest. `lib/api.ts` must build results as `{ ...entry, slug }` (outer `slug` — the actual derived one — spread last, so it wins), never `{ slug, ...entry }`. Getting this backwards silently breaks every post link (e.g. `/posts/Hello World` instead of `/posts/hello-world`) with no type error, since both are typed as `string`.
@@ -74,6 +81,8 @@ app/
 ├── contact/page.tsx            # Contact page: static copy + facts grid + <ContactForm />
 ├── contact-form.tsx            # "use client" form (name/company/email/message) posting to api/contact
 ├── posts/[slug]/               # Dynamic blog post pages
+├── sitemap.ts                  # MetadataRoute.Sitemap — static routes + one entry per post from getAllPosts()
+├── robots.ts                   # MetadataRoute.Robots — disallows /keystatic, /api/keystatic (see note above)
 ├── keystatic/                  # Local-only Keystatic admin UI (see Content Management above)
 ├── api/keystatic/[...params]/  # Keystatic's write-capable API route, same local-only gating
 └── api/contact/                # Contact-form submission endpoint (BotID + SMTP, see below)

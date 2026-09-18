@@ -1,10 +1,23 @@
-import { COMPANY_NAME, CVR, CONTACT_EMAIL } from "@/lib/constants";
+import type { Metadata } from "next";
+
+import { COMPANY_NAME, CVR, CONTACT_EMAIL, SITE_URL } from "@/lib/constants";
 import ContactForm from "../../contact-form";
 
-export const metadata = {
-  title: `Contact - ${COMPANY_NAME}`,
-  description:
-    "Get in touch with Tuxedo Code ApS about a software development or consulting project.",
+const title = `Contact - ${COMPANY_NAME}`;
+const description =
+  "Get in touch with Tuxedo Code ApS about a software development or consulting project.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: `${SITE_URL}/contact` },
+  openGraph: {
+    type: "website",
+    siteName: "Tuxedo Code",
+    title,
+    description,
+    url: `${SITE_URL}/contact`,
+  },
 };
 
 const facts = [

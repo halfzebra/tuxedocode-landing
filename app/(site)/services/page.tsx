@@ -1,11 +1,24 @@
-import { COMPANY_NAME, EXPERIENCE_YEARS } from "@/lib/constants";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-export const metadata = {
-  title: `Services - ${COMPANY_NAME}`,
-  description:
-    "Freelance software consulting services: full-stack development, cloud & DevOps, AI/LLM integration, solution architecture, test automation, and data engineering.",
+import { COMPANY_NAME, EXPERIENCE_YEARS, SITE_URL } from "@/lib/constants";
+
+const title = `Services - ${COMPANY_NAME}`;
+const description =
+  "Freelance software consulting services: full-stack development, cloud & DevOps, AI/LLM integration, solution architecture, test automation, and data engineering.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: `${SITE_URL}/services` },
+  openGraph: {
+    type: "website",
+    siteName: "Tuxedo Code",
+    title,
+    description,
+    url: `${SITE_URL}/services`,
+  },
 };
 
 const services = [
